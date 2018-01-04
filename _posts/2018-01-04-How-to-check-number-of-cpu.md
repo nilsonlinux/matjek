@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "CPU 개수 확인"
-date: 2018-01-04 16:44:00 +8000
-tags: Linux cmd cpu
+date: 2018-01-04 16:45:00 +8000
+categories: Linux
+tags: Linux linux CMD cmd CPU cpu
 ---
 
 # CPU 개수 확인
@@ -16,7 +17,7 @@ tags: Linux cmd cpu
 
 #### 시스템 전체 코어 수
 
-```c
+```
 grep -c processor /proc/cpuinfo
 ```
 
