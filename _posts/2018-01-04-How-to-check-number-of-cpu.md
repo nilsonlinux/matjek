@@ -6,6 +6,8 @@ categories: Linux
 tags: Linux linux CMD cmd CPU cpu
 ---
 
+
+
 # CPU 개수 확인
 
 ### 리눅스 명령어
@@ -17,7 +19,7 @@ tags: Linux linux CMD cmd CPU cpu
 
 #### 시스템 전체 코어 수
 
-```
+```c
 grep -c processor /proc/cpuinfo
 ```
 
