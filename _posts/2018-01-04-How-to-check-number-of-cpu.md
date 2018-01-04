@@ -1,11 +1,10 @@
-
 ---
 layout: post
-title: CPU 개수 확인
+title: "CPU 개수 확인"
 date: 2018-01-04 16:44:00 +8000
-categories: Linux
 tags: Linux cmd cpu
 ---
+
 # CPU 개수 확인
 
 ### 리눅스 명령어
