@@ -29,21 +29,29 @@ main
         width: auto
   h1
     font-size: 40px
+    color: red
   h2
-    font-size: 34px
+    font-size: 36px
+    color: blue
   h3
-    font-size: 28px
+    font-size: 32px
+    color: green
   h4
-    font-size: 22px
+    font-size: 28px
+    color: purple
   h5
-    font-size: 16px
-  h6
-    font-size: 12px
+    font-size: 24px
+  p, ul, ol 
+    font-size: 20px
+    li
+      font-size: 20px
+
 
 #post-info
-  h3
-    font-weight: bold
+  h1
+    font-size: 46px
     margin-bottom: 15px
+    color: green
 
   ul
     &:not(.browser-default)
@@ -74,6 +82,10 @@ main
         background-color: #616161
 
       @include transition(all .3s ease-in-out)
+
+
+
+
 
 @media only screen and (max-width: 992px)
   #post-info
