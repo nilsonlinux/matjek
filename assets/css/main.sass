@@ -168,16 +168,28 @@ main
   h1
     font-family: 'Noto Sans KR'
     font-weight: 700
-  h2,h3,h4,h5,h6  
+  h2  
+    font-family: 'Jeju Gothic'
+    border-bottom: 1px solid
+    border-color: #f0f0f0 
+  h3,h4,h5,h6  
     font-family: 'Jeju Gothic'
   p
     font-family: 'Nanum Gothic'
-  ul, ol
+  ul
     &:not(.browser-default)
     padding-left: 40px
     li
       font-family: 'Nanum Gothic'
-      list-style-type: disc
+  ol
+    &:not(.browser-default)
+    padding-left: 40px
+    list-style-type: number
+    li
+      font-family: 'Nanum Gothic'
+  hr
+    border-bottom: 3px solid
+    border-color: Lightgray
 
 @media only screen and (max-width: 992px)
   header,
