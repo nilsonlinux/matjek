@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ubuntu 저장소 변경"
-date: {{page.date|date_to_rfc822}}
+date: 2018-01-12 16:00 +0900
 categories: Linux
 tags: ubuntu
 ---
