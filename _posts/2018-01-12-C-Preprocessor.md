@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "C언어 전처리문(Preprocessor)"
+date: 2017-01-12 18:55 +0900
 categories: Program-Language
 tags: C
 ---

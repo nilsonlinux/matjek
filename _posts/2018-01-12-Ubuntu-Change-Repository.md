@@ -26,6 +26,6 @@ sudo vim /etc/apt/sources.list
 
 
 ```powershell
-:%s/us.ubuntu.com/ftp.daumkakao.com/g
+:%s/us.archive.ubuntu.com/ftp.daumkakao.com/g
 ```
 
