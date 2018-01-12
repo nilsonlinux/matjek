@@ -22,7 +22,8 @@ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bp
 sudo vim /etc/apt/sources.list
 ```
 
- . vim 명령모드 `:` 에서 아래 명령 수행
+>  vim 명령모드 `:` 에서 아래 명령 수행
+>
 
 ```powershell
 :%s/us.ubuntu.com/ftp.daumkakao.com/g
