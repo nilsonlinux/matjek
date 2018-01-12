@@ -1,11 +1,7 @@
 ---
 layout: post
 title: "C언어 전처리문(Preprocessor)"
-<<<<<<< HEAD
 date: 2018-01-12 18:55
-=======
-date: 2018-01-12 18:55:00
->>>>>>> 1eae5133ccde62cd6cb59eec0118419470fa42d5
 categories: Program-Language
 tags: c
 ---
