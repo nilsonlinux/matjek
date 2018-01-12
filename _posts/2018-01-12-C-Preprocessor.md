@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "C언어 전처리문(Preprocessor)"
-date: 2017-01-12 18:55 +0900
+date: 2017-01-12 18:55:00 +0900
 categories: Program-Language
-tags: C
+tags: c
 ---
 
 C언어 전처리문 관련한 정보를 기술한다.
