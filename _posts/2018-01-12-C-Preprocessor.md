@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C언어 전처리문(Preprocessor)"
-date: 2017-01-12 18:55:00 +0900
+date: 2018-01-12 18:55:00
 categories: Program-Language
 tags: c
 ---
@@ -41,7 +41,7 @@ graph LR
 
  . 매개변수 존재하는 형태(함수)로도 사용가능함
 
-```c
+```java
 #define DOUBLE(X) X*2
 ```
 
@@ -49,7 +49,7 @@ graph LR
 
 ##### ex)    
 
-```c
+```java
 #include <stdio.h>
 
 #define PI 3.14
@@ -85,7 +85,7 @@ int main()
 
    . 특정 코드를 선택하여 실행하고자 할때 사용함
 
-   ```c
+   ```java
    #include <stdio.h>
 
    #define PI 3.14
@@ -117,7 +117,7 @@ int main()
 
    . 헤더 파일의 중복포함을 막기 위해 사용됨
 
-   ```c
+   ```java
    #include <stdio.h>
 
    #define PI 3.14
@@ -147,7 +147,7 @@ int main()
 
    . if문의 else, elseif 와 같은 역할
 
-   ```c
+   ```java
    #include <stdio.h>
 
    #define NUM 2
@@ -184,7 +184,7 @@ int main()
 
    . 매크로의 값을 단순히 연결함
 
-   ```c
+   ```java
    #include <stdio.h>
    #define NUM(X,Y) X ## Y
 
