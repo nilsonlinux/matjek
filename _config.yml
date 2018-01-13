@@ -40,9 +40,12 @@ gems:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-mermaid
 exclude:
   - Gemfile
   - Gemfile.lock
 sass:
   style: compressed
 future: true
+mermaid:
+  src: 'path/to/mermaid.js'
