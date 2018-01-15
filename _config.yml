@@ -48,4 +48,4 @@ sass:
   style: compressed
 future: true
 mermaid:
-  src: 'path/to/mermaid.js'
+  src: 'assets/js/mermaid.js'
