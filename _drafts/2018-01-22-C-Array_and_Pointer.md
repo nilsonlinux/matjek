@@ -305,5 +305,97 @@ const int * const ptr = &num1;
 
 
 
+#### 더블 포인터 변수
 
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    int num = 10;
+    int * ptr1 = &num;
+    int **dptr = &ptr1;
+    int * ptr2;
+    
+    printf("[address] ptr1: %p  *dptr: %p \n", ptr1, *dptr);
+    printf("[value] *ptr: %d  **dptr: %d \n", *ptr1, **dptr);
+    
+    ptr2 = *dptr; // ptr2 = ptr1 과 동일
+    
+    printf("[address] ptr2: %p \n", ptr2);
+    printf("[value] ptr2: %d \n", *ptr2);
+    
+    *ptr2 = 20; 
+    // *ptr1 = 20; , **dptr = 20; , num = 20; 과 동일
+    printf("[value] num: %d \n", num);
+
+    return 0;
+}
+```
+
+![9](https://user-images.githubusercontent.com/29933947/35266991-36c9d1e0-0068-11e8-880b-c4d4e6c091fe.png)
+
+```c
+#include <stdio.h>
+
+void SwapPtr(int **dptr1, int **dptr2)
+{
+    int *temp = *dptr1;
+    *dptr1 = *dptr2;
+    *dptr2 = temp;
+    
+    /*
+    int *temp = ptr1;
+    ptr1 = ptr2;
+    ptr2 = temp;
+    */
+}
+
+int main(void)
+{
+    int num1 = 10 , num2 = 20;
+    int *ptr1, *ptr2;
+    ptr1 = &num1, ptr2 = &num2;
+    
+    printf("*ptr1 : %d,  *ptr2 : %d \n", *ptr1, *ptr2);
+    
+    SwapPtr(&ptr1, &ptr2);
+    printf("*ptr1 : %d,  *ptr2 : %d \n", *ptr1, *ptr2);
+    
+    printf("num1 : %d,  num2 : %d \n", num1, num2);
+    
+    return 0;
+}
+```
+
+![10](https://user-images.githubusercontent.com/29933947/35267482-c2a27572-0069-11e8-9e69-d8dda5517018.png)
+
+
+
+  . 포인터 배열의 포인터형은 더블 포인터 형이다.
+
+​      ex) *ptrArr[] 의 포인트 배열 이름인 'ptrArr' 은 int **dptr = ptrArr 로 연산되며, 더블포인터 형임
+
+​      ! 2차원 배열 `int Arr[3][4]` 의 이름인 'Arr' 은 int ** 형이 아님
+
+
+
+#### 다차원 배열의 포인터
+
+##### 배열 포인터 변수
+
+ `int arr[3][4]`
+
+  . 배열이름 arr이 가리키는 대상은 int형 변수
+
+  . arr의 값을 1 증가시키면, sizeof(int) * 4의 크기만큼 주소 값이 증가하는 포인터 형
+
+  .포인트 연산 시 sizeof(int) * 4의 크기만큼 값이 증가 및 감소하는 포인터 형
+
+```c
+...
+int arr[3][4];
+int (*ptr) [4];  // arr[3][4]를 가리킬 수 있는 포인터 변수
+...
+```
 
