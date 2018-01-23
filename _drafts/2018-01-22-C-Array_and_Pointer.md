@@ -396,6 +396,210 @@ int main(void)
 ...
 int arr[3][4];
 int (*ptr) [4];  // arr[3][4]를 가리킬 수 있는 포인터 변수
+
+ptr = arr;
+
+// ptr[0][0], ptr[0][1], ptr[0][2], ptr[0][3],
+// *(ptr+1)[0], *(ptr+1)[1], *(ptr+1)[2], *(ptr+1)[3],
+// *(*(ptr+1)+0), *(*(ptr+1)+1), **(ptr+1)+2, **(ptr+1)+3,
 ...
 ```
+
+![_ 1 2](https://user-images.githubusercontent.com/29933947/35281973-acf1d460-0097-11e8-8982-9318e0d805b6.png)
+
+```c
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    
+    int arr1[2][2] = {
+        {1, 2}, {3, 4}
+    };
+    int arr2[3][2] = {
+        {1, 2}, {3, 4}, {5, 6}
+    };
+    int arr3[4][2] = {
+        {1, 2}, {3, 4}, {5, 6}, {7, 8}
+    };
+    
+    int (*ptr)[2];
+    
+    ptr = arr1;
+    printf("Arr1 \n");
+    for(i=0; i < 2; i++)
+        printf("%d %d \n", ptr[i][0], ptr[i][1]);
+        
+    ptr = arr2;
+    printf("Arr2 \n");
+    for(i=0; i < 3; i++)
+        printf("%d %d \n", *(ptr+i)[0], ptr[i][1]);    
+    
+    ptr = arr3;
+    printf("Arr3 \n");
+    for(i=0; i < 4; i++)
+        //printf("%d %d \n", *(ptr+i)[0], *(*(ptr+i)+1));    
+        printf("%d %d \n", *(ptr+i)[0], **(ptr+i)+1);    
+    return 0;
+}
+```
+
+![1](https://user-images.githubusercontent.com/29933947/35280745-72b47dbe-0094-11e8-9732-9c8e9a05a468.png)
+
+##### 2차원 배열 함수 인자 전달
+
+```c
+#include <stdio.h>
+
+// void ShowArr(int arr[][4], int column)
+// 매개 변수에서만 서로 치환 가능
+void ShowArr(int (*arr)[4], int column)
+{
+    int i, j;
+    
+    for(i=0; i<column; i++)
+    {
+        for(j=0; j<4; j++)
+            printf(" %2d ", arr[i][j]);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+// int SumArr(int (*arr)[4], int column)
+// 매개 변수에서만 서로 치환 가능
+int SumArr(int arr[][4], int column)
+{
+    int i, j, sum = 0;
+    for(i=0; i<column; i++)
+        for(j=0; j<4; j++)
+            sum += arr[i][j];
+    return sum;
+}
+
+int main()
+{
+    int arr1[2][4] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int arr2[3][4] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    
+    // sizeof(arr1)은 전체 배열의 크기
+    // sizeof(arr1[0])은 배열 1행의 크기
+    ShowArr(arr1, sizeof(arr1)/sizeof(arr1[0]));
+    ShowArr(arr2, sizeof(arr2)/sizeof(arr2[0]));   
+        
+    printf("sum of arr1: %d \n",
+         SumArr(arr1, sizeof(arr1)/sizeof(arr1[0])));
+    printf("sum of arr2: %d \n"
+        ,SumArr(arr2, sizeof(arr2)/sizeof(arr1[0])));
+        
+    return 0;
+}
+```
+
+![2](https://user-images.githubusercontent.com/29933947/35283962-e98c224a-009c-11e8-87fa-229d0d944f0e.png)
+
+
+
+
+
+#### 함수 포인터
+
+  . 함수들이 바이너리 형태로 메모리 공간에 저장된 주소 값을 저장하는 포인터 변수
+
+  . 함수 포인터 형은 함수의 반환형과 매개변수 선언을 통해 결정됨
+
+```c
+...
+int cfunc(int num1, num2){ .... }
+
+int (*fptr) (int, int);
+fptr = cfunc;
+fptr(1, 2) // cfunc(3,4) 와 동일
+...
+```
+
+```c
+#include <stdio.h>
+
+int WhoIsFirst(int age1, int age2, int (*cmp)(int n1, int n2))
+{
+    return cmp(age1, age2);
+}
+
+int OlderFirst(int age1, int age2)
+{
+    if(age1 > age2)
+        return age1;
+    else if(age1 < age2)
+        return age2;
+    else
+        return 0;
+}
+
+int main(void)
+{
+    int age1 = 20;
+    int age2 = 30;
+    int first;
+    
+    printf("입장 순서 \n");
+  	first = WhoIsFirst(age1, age2, OlderFirst);   // OlderFirst 함수를 인자로 전달
+    printf("%d세와 %d세 중 %d세가 먼저 입장! \n", age1, age2, first);
+    
+    return 0;
+}
+```
+
+![3](https://user-images.githubusercontent.com/29933947/35287052-e12f21ee-00a4-11e8-8658-d015ce4f08a2.png)
+
+
+
+##### void 포인터
+
+`void * ptr`
+
+  . 어떠한 변수의 주소 값이든 지정 가능
+
+  . 단, 포인터 연산, 값의 변경 참조는 불가능함
+
+
+
+#### 메인함수 인자 전달
+
+##### char * argv[]
+
+  . argv 는 char 형 더블 포인터 변수
+
+  . char 형 포인터 변수로 이루어진 1차원 배열의 이름을 전달 받을 수 있는 매개 변수
+
+​     `void cfunc(int * arr)`
+
+​     `void cfunc(int arr[])`
+
+```c
+#include <stdio.h>
+
+// void ShowString(int argc, char ** argv)
+void ShowString(int argc, char * argv[])
+{
+    int i;
+    for(i=0; i<argc; i++)
+        printf("%s \n", argv[i]);
+}
+
+int main(void)
+{
+    char * str[2] = {
+        "This is String",
+        "That is String"
+    };
+    
+    ShowString(2, str);
+    
+    return 0;
+}
+```
+
+![4](https://user-images.githubusercontent.com/29933947/35288082-2c301d90-00a7-11e8-9ae4-797a136407fc.png)
 
