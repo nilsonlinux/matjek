@@ -2,8 +2,8 @@
 layout: post
 title: "C언어 정리-배열,포인터"
 date: 2018-01-22 19:00
-Categories: Program-Language
-Tags: C
+categories: Program-Language
+tags: C
 ---
 
 C언어 배열, 포인터 관련 내용 정리
