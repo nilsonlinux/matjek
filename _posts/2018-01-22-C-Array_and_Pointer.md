@@ -1,5 +1,5 @@
 ---
-layout: posts
+layout: post
 title: "C언어 정리-배열,포인터"
 date: 2018-01-22 19:00
 Categories: Program-Language
