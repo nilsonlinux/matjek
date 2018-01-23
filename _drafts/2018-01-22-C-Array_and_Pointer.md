@@ -142,3 +142,55 @@ int main(void)
 
 ![4](https://user-images.githubusercontent.com/29933947/35227458-8138aab8-ffd1-11e7-8b16-ebabd990ffbd.png)
 
+
+
+#### arr[i] ==  *(arr+i)
+
+```c
+..
+
+int arr[3] = {10, 20, 30}
+int * ptr=arr;
+
+//동일 표현
+arr[0], arr[1], arr[2]
+*(arr+0), *(arr+1), *(arr+2)
+ptr[0], ptr[1], ptr[2]
+*(ptr+0), *(ptr+1), *(ptr+2)
+```
+
+
+
+#### 배열 혹은 포인터 선언에 의한 문자열
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+ 	char str1[] = "This is String"; // 변수 형태 문자열
+  	char * str2 = "That is String";	// 상수 형태 문자열
+  
+  	printf("initial value: %s %s \n",str1, str2);
+  	
+  	str2 = "It is not String"; // 가리키는 대상 변경 가능, str1은 변경 불가
+  	printf("change str2: %s\n", str2);
+  
+  	str1[0] = 'A';
+  	//str2[0] = 'A'; // 컴파일 시 에러
+  	
+  	printf("after changing characther on s1: %s %s \n",str1, str2);
+   	return 0;
+}
+```
+
+![_ 1](https://user-images.githubusercontent.com/29933947/35253451-da3e6aec-0028-11e8-93ec-79bd0eb7d1a0.png)
+
+![_ 2](https://user-images.githubusercontent.com/29933947/35253458-dee89c16-0028-11e8-8dac-56ddc3795312.png)
+
+   . ""로 묶인 문자열은 메모리에 저장되면 그 주소 값을 반환함
+
+   . 따라서  printf("Hello World") 는 printf(0x123456)의 형태로 호출됨
+
+   . ex) printf(0x123456) ....... void printf(char * str)
+
