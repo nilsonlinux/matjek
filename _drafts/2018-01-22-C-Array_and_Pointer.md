@@ -184,13 +184,53 @@ int main(void)
 }
 ```
 
+![1](https://user-images.githubusercontent.com/29933947/35253634-de1fc650-0029-11e8-9ecc-934e3afcdc9b.png)
+
 ![_ 1](https://user-images.githubusercontent.com/29933947/35253451-da3e6aec-0028-11e8-93ec-79bd0eb7d1a0.png)
 
 ![_ 2](https://user-images.githubusercontent.com/29933947/35253458-dee89c16-0028-11e8-8dac-56ddc3795312.png)
+
+
 
    . ""로 묶인 문자열은 메모리에 저장되면 그 주소 값을 반환함
 
    . 따라서  printf("Hello World") 는 printf(0x123456)의 형태로 호출됨
 
    . ex) printf(0x123456) ....... void printf(char * str)
+
+
+
+#### 포인터 배열
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+   	int num1=10, num2=20, num3=30;
+   	
+   	// 포인터 배열
+ 	int * arr[3]={&num1, &num2, &num3};
+   	char * strArr[3] = {"String", "Array", "Test"};
+
+   	printf("*arr[0]: %d \n", *arr[0]);
+   	printf("*arr[1]: %d \n", *arr[1]);
+   	printf("*arr[2]: %d \n", *arr[2]);
+   	
+   	printf("strArr[0]: %s \n", strArr[0]);
+   	printf("strArr[1]: %s \n", strArr[1]);
+   	printf("strArr[2]: %s \n", strArr[2]);
+   	
+   	return 0;
+}
+```
+
+![2](https://user-images.githubusercontent.com/29933947/35254481-ba76f27e-002d-11e8-9847-1ab97e44ddfb.png)
+
+![_ 3](https://user-images.githubusercontent.com/29933947/35254402-65e48b0e-002d-11e8-871c-d378c2fc3ba0.png)
+![_ 4](https://user-images.githubusercontent.com/29933947/35254404-66161b42-002d-11e8-9594-d34036e6d86c.png)
+
+#### 함수 인자의 배열 전달
+
+
 
