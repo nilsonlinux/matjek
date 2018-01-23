@@ -232,5 +232,78 @@ int main(void)
 
 #### 함수 인자의 배열 전달
 
+  . 함수 호출 시, 전달되는 인자의 값은 매개변수에 복사
+
+```c
+#include <stdio.h>
+
+// void ShowArrayParam(int paramp[], int len)
+// 위 형태로도 선언 가능함
+// 단! 매개변수로 선언할 때만 가능
+void ShowArrayParam(int * param, int len)
+{
+    int i;
+    for(i=0; i<len; i++)
+        printf("Array[%d]: %d \n", i, param[i]);
+}
+
+void AddArrayParam(int * param, int len, int addnum)
+{
+    int i;
+    for(i=0; i<len; i++)
+        param[i] += addnum;
+}
+
+int main(void)
+{
+    int arr[3] = {1, 2, 3};
+    
+    printf("initial valume: %d %d %d \n", arr[0], *(arr+1), arr[2]);
+    
+    // 배열 이름 == 주소 값을 통한 함수의 매개변수로 배열 인자 전달
+    AddArrayParam(arr, sizeof(arr)/sizeof(int), 10);
+    ShowArrayParam(arr, sizeof(arr)/sizeof(int));
+    
+    AddArrayParam(arr, sizeof(arr)/sizeof(int), 100);
+    ShowArrayParam(arr, sizeof(arr)/sizeof(int));
+    
+    return 0;
+}
+```
+
+![3](https://user-images.githubusercontent.com/29933947/35255242-745c7148-0031-11e8-982c-2bb7d4a5b1b3.png)
+
+
+
+#### 포인터 Const
+
+```c
+const int * ptr = &num1;
+```
+
+  . 포인터 변수가 참조하는 대상의 변경 허용하지 않음
+
+  . ex) *ptr = 10; 의 경우 에러 발생
+
+```c
+int * const ptr = &num1;
+```
+
+  . 포인터 변수의 상수화
+
+  . 한 번 저장된 주소값은 변경될 수 없음
+
+  . ex) ptr = &num2; 의 경우 에러 발생
+
+```c
+const int * const ptr = &num1;
+```
+
+  . 포인터 변수에 저장된 주소 값(가리키는 대상)의 변경이 불가
+
+  . 포인터 변수가 가리키는 대상의 값을 직접 변경 불가능
+
+
+
 
 
