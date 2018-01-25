@@ -3,7 +3,7 @@ layout: post
 title: "CPU 개수 확인"
 date: 2018-01-04 16:45:00 +8000
 categories: Linux
-tags: Linux linux CMD cmd CPU cpu
+tags: Linux
 ---
 # CPU 개수 확인
 
