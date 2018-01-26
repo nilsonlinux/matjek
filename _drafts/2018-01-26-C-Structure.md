@@ -130,3 +130,129 @@ int main()
 
 ### 함수의 인자로 전달되는 구조체
 
+```c
+#include <stdio.h>
+
+typedef struct point
+{
+    int pos_x;
+    int pos_y;
+}Point;
+
+// 구조체 변수의 call by value
+void ShowPosition(Point pos)
+{
+    printf("< %d %d > \n", pos.pos_x, pos.pos_y );
+}
+
+Point CurrentPosition(void)
+{
+    Point cen;
+    Printf("Input current pos: ");
+    scanf("%d %d", &cen.pos_x, &cen.pos_y);
+    
+    return cen;
+}
+
+// 구조체 변수의 call by reference
+void SymmetryPosition(Point * ptr)
+{
+    ptr->pos_x = (ptr->pos_x) * -1;
+    ptr->pos_y = (ptr->pos_y) * -1;
+}
+
+int main()
+{
+    Point curPos = CurrentPosition();
+    ShowPosition(CurPos);				// 구조체 복사
+
+    SymmetryPosition(&curPos);			// curPos 구조체의 멤버변수 조작을 위한 주소 전달
+    ShowPosition(curPos);				// 구조체 복사
+
+    return 0;
+}
+```
+
+![4](https://user-images.githubusercontent.com/29933947/35420036-a5848b08-027e-11e8-99bc-286442cf153e.png)
+
+  . 구조체 변수를 대상으로 대입연산, 주소값 반환(&) 연산, 구조체 변수 크기 반환(sizeof) 연산 등이 허용
+
+  . 사칙연산은 별도의 함수를 정의하여 수행해야함
+
+```c
+#include <stdio.h>
+
+typedef struct point
+{
+    int pos_x;
+    int pos_y;
+}Point;
+
+Point AddPosition(Point pos1, Point pos2)
+{
+    Point pos = {pos1.pos_x + pos2.pos_x, pos1.pos_y + pos2.pos_y};
+    return pos;
+}
+
+int main()
+{
+    Point pos1 = { 1, 2 };
+    Point pos2 = { 3, 4 };
+    Point result;
+    
+    result = AddPosition(pos1, pos2);
+    printf("<X: %2d Y: %2d >\n", result.pos_x, result.pos_y);
+    
+    return 0;
+}
+```
+
+![5](https://user-images.githubusercontent.com/29933947/35420252-ccb935b0-027f-11e8-9456-a4bca417d3ad.png)
+
+#### 구조체 중첩
+
+  . 구조체의 멤버변수로 구조체 선언 가능
+
+```c
+#include <stdio.h>
+
+typedef struct point
+{
+    int pos_x;
+    int pos_y;
+}Point;
+
+typedef struct circle
+{
+    Point cen;
+    double rad;
+}Circle;
+
+void ShowCircleInfo(Circle * cptr)
+{
+    printf("[ %d %d ] \n", (cptr->cen).pos_x, (cptr->cen).pos_y);
+    printf("radius: %g \n\n", cptr->rad);
+}
+
+int main()
+{
+    Circle c1 = {{1, 2}, 2.5};
+    Circle c2 = {3, 4, 5.5};
+    
+    ShowCircleInfo(&c1);
+    ShowCircleInfo(&c2);
+    
+    return 0;
+}
+```
+
+![6](https://user-images.githubusercontent.com/29933947/35420598-c75e7b78-0281-11e8-8864-cda11c0800a4.png)
+
+
+
+### 공용체(union)
+
+
+
+### 열거형(enum)
+
