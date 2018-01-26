@@ -252,7 +252,89 @@ int main()
 
 ### 공용체(union)
 
+![_ 1](https://user-images.githubusercontent.com/29933947/35429986-b78671aa-02b9-11e8-90bd-b78c702966bb.png)
+
+  . 공용체를 구성하는 멤버변수 중, 데이터형의 크기가 (메모리 차지 공간) 가장 큰 데이텨형 만큼의 메모리 공간 사용
+
+  . 할당된 메모리 공간을 멤버변수들이 공유하게 됨
+
+  . 데이터형의 메모리 공간에 얽매이지 않는 접근방식을 제공하기 위함
+
+```c
+#include <stdio.h>
+
+typedef struct dbshort
+{
+    unsigned short upper;   // 2byte
+    unsigned short lower;   // 2byte
+} DBShort;
+
+typedef union rdbuf
+{
+    int iBuf;   // 4byte
+    char bBuf[4];   // 4byte
+    DBShort sBuf;   // 4byte
+} RDBuf;
+
+int main(void)
+{
+    RDBuf buf;
+    printf("정수 입력: "); scanf("%d", &(buf.iBuf));
+    
+    printf(" 상위 2바이트: %u \n ", buf.sBuf.upper);
+    printf(" 하위 2바이트: %u \n ", buf.sBuf.lower);
+    printf(" 상위 1바이트 아스키 코드: %c \n ", buf.bBuf[0]);
+    printf(" 상위 1바이트 아스키 코드: %c \n ", buf.bBuf[3]);
+    
+    return 0;    
+}
+
+```
+
+![17](https://user-images.githubusercontent.com/29933947/35430344-36283c22-02bb-11e8-9e2c-27415221b69b.png)
+
+![_ 2](https://user-images.githubusercontent.com/29933947/35429988-b7b34ee6-02b9-11e8-93c5-eefd14dcde17.png)
+
 
 
 ### 열거형(enum)
 
+  . 저장이 가능 한 값 자체를 정수의 형태로 선언하여 사용
+
+  . 반복되는 정해진 상수에 대해 프로그램 가독성을 높이기 위해 종종 사용됨
+
+```c
+#include <stdio.h>
+
+typedef enum scale
+{
+    Do = 1, Re = 2, Mi = 3
+} Scale;
+
+void Sound(Scale a)
+{
+    switch(a)
+    {
+        case Do:
+            puts("도");
+            return;
+        case Re:
+            puts("레");
+            return;
+        case Mi:
+            puts("미");
+            return;
+    }
+}
+
+int main(void)
+{
+    Scale tone;
+    // for(tone = 1; tone <= 3; tone += 1)
+    for(tone = Do; tone <= Mi; tone += 1)
+        Sound(tone);
+    return 0;
+}
+```
+
+![18](https://user-images.githubusercontent.com/29933947/35430597-550ba7c2-02bc-11e8-84ba-435698cb734c.png)
