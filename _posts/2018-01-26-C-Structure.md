@@ -236,7 +236,7 @@ void ShowCircleInfo(Circle * cptr)
 
 int main()
 {
-    Circle c1 = {{1, 2}, 2.5};
+    Circle c1 = {`{1, 2}`, 2.5};
     Circle c2 = {3, 4, 5.5};
     
     ShowCircleInfo(&c1);
