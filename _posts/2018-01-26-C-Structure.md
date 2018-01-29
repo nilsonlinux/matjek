@@ -64,7 +64,7 @@ struct point
 {
   int pos_x;
   int pos_y;
-}
+};
 
 ...
 int main(void)
@@ -73,7 +73,7 @@ int main(void)
   struct point arr1[3] = {		// 초기화 방법
     {1,2},
     {3,4}    
-  }
+  };
   ....
 }
 ```
