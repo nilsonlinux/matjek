@@ -220,15 +220,178 @@ int main(void)
 }
 ```
 
-
+-- 결과값 확인
 
 #### fprintf, fscanf
 
+  . 텍스트, 바이너리로 이루어진 데이터의 입출력에 사용되는 함수
+
+  . printf, scanf의 함수와 동일한 구조이면서, 첫 번째 인자에 FILE 구조체 포인터가 위치하는 것이 차이점
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+  char name[10]; // 텍스트 데이터
+  char sex;      // 텍스트 데이터
+  int age;       // 바이너리 데이터
+  
+  // for write
+  FILE * fpw = fopen("mix-data.txt", "wt");  
+  int i;
+  
+  // for read
+  FILE *fpr = NULL;
+  int ret;
+  
+  for(i=0; i<3; i++)
+  {
+    printf("이름 성별 나이 순 입력: ");
+    scanf("%s %c %d", name, &sex, &age);
+    getchar(); // buffer에 남아 있는 개행문자 \n 의 소멸을 위해
+               // 엔터 키의 입력을 읽어들이지 않고 입력버퍼에 두는 scanf에 특성에 따름
+    fprintf(fpw, "%s %c %d", name, sex, age);
+  }
+  
+  fclose(fpw);
+    
+  fpr = fopen("mix-data.txt", "rt");
+  
+  while(1)
+  {
+    ret = fscanf(fpr, "%s %c %d", name &sex, &age);
+    if(ret == EOF)
+      break;
+    printf("%s %c %d \n", name sex, age);
+  }
+  
+  fclose(fpr);
+  
+  return 0;  
+}
+```
+
+-- 결과 값 확인
+
 #### fseek
+
+  . `파일 위치 지시자`를 직접 이동시키고자 할 때, 사용하는 함수
+
+> 파일 위치 지시자 
+>
+> - FILE 구조체 멤버 중, 파일의 위치 정보를 저장하고 있는 멤버
+> - fgets, fputs, fread, fwrite 같은 파일 관련 함수가 호출될 때마다 참조 및 갱신됨
+> - 파일이 처음 개방되면 무조건 파일의 맨 앞부분을 가리킴
+
+```c
+#include <stdio.h>
+int fseek(FILE * stream, long offset, int wherefrom);
+// stream 으로 전달된 파일 위치 지시자를 wherefrom에서 부터 offset만큼 이동
+```
+
+  . 성공 시 `0`, 실 패 시 `0이 아닌 값` 반환
+
+  . wherefrom의 지시자
+
+| 매개변 수 wherefrom | 파일 위치 지시자              |
+| --------------- | ---------------------- |
+| SEEK_SET(0)     | 파일 맨 앞에서부터 이동을 시작      |
+| SEEK_CUR(1)     | 현재 위치에서부터 이동을 시작       |
+| SEEK_END(2)     | 파일 맨 끝(EOF)에서부터 이동을 시작 |
+
+  . 매개변수 offset은 양의 정수, 음의 정수 모두 가능
+
+  . 음의 정수일 경우 파일의 시작 위치를 향해서 파일 위치 지시자가 이동함
+
+-- 그림으로 표현
+
+
 
 #### ftell
 
+  . 현재 파일 위치 지시자 정보 확인
 
+```c
+#include <stdio.h>
+long ftell(FILE *stream)
+```
+
+  . Byte 단위 반환
+
+​    ex)파일 위치 지시자가 첫 번째 바이트 가리킬 경우 0, 세번 째 가리킬 경우 2 반환
+
+```c
+#include <stdio.h>
+
+/* ftell을 이용하여 파일 위치 지시자의 정보를 임시로 저장하고 활용하는 프로그램 */
+int main(void)
+{
+  long fpos;
+  int i;
+  
+  // 파일 생성
+  FILE * fp = fopen("text.txt", "wt");
+  fputs("1234-", fp);
+  fclose(fp);
+  
+  // 파일 개방
+  fp = fopen("text.txt", "rt");
+  
+  for(i=0; i<4; i++)
+  {
+    putchar(fgetc(fp));
+    fpos = ftell(fp);			// 파일 위치 지시자의 위치 저장
+    fseek(fp, -1, SEEK_END);	// EOF 바로 앞으로 파일 위치 지시자 이동 후, 출력
+    putchar(fgetc(fp));
+    fseek(fp, fpos, SEEK_SET);  // 이전의 파일 위치 지시자 위치로 이동
+  }
+  fclose(fp);
+  return 0;
+}
+```
+
+--- 출력결과 확인
+
+
+
+#### 구조체 변수 입출력
+
+  . 구조체 변수를 하나의 바이너리 데이터로 인식하고 처리하도록 함
+
+  . 따라서, fwrite, fread 함수를 사용한다.
+
+```c
+#include <stdio.h>
+typedef struct fren
+{
+  char name[10];
+  char sex;
+  int age;
+} Friend;
+
+int main(void)
+{
+  FILE * fp;
+  Friend myfren1;
+  Friend myfren2;
+  
+  // Write
+  fp = fopen("friend.bin", "wb");
+  printf("이름, 성별, 나이 순 입력: ");
+  scanf("%s %sc %d", myfren1.name, &(myfren1.sex), &(myfren1.age));
+  fwrite((void*)&myfren1, sizeof(myfren1), 1, fp);
+  fclose(fp);
+  
+  // Read
+  fp = fopen("friend.bin", "rb");
+  fread((void*)&myfren2, sizeof(myfren2), 1, fp);  
+  printf("%s %sc %d", myfren2.name, &(myfren2.sex), &(myfren2.age));
+  fclose(fp);
+  
+  return 0;
+}
+```
 
 
 
