@@ -220,7 +220,19 @@ int main(void)
 }
 ```
 
--- 결과값 확인
+  . 복사할 src.bin 값
+
+![9](https://user-images.githubusercontent.com/29933947/35544516-17899a9a-05ae-11e8-800a-8994231979bd.png)
+
+  . 파일 복사
+
+![12](https://user-images.githubusercontent.com/29933947/35544517-17b0e5e6-05ae-11e8-9320-62c2917ce14a.png)
+
+  . 복사된 des.bin 값
+
+![10](https://user-images.githubusercontent.com/29933947/35544515-1760933e-05ae-11e8-871b-2f403d663c64.png)
+
+
 
 #### fprintf, fscanf
 
@@ -260,10 +272,10 @@ int main(void)
   
   while(1)
   {
-    ret = fscanf(fpr, "%s %c %d", name &sex, &age);
+    ret = fscanf(fpr, "%s %c %d", name, &sex, &age);
     if(ret == EOF)
       break;
-    printf("%s %c %d \n", name sex, age);
+    printf("%s %c %d \n", name, sex, age);
   }
   
   fclose(fpr);
@@ -272,7 +284,9 @@ int main(void)
 }
 ```
 
--- 결과 값 확인
+![13](https://user-images.githubusercontent.com/29933947/35544642-d9005cf4-05ae-11e8-85bd-87802b064e96.png)
+
+
 
 #### fseek
 
@@ -304,7 +318,7 @@ int fseek(FILE * stream, long offset, int wherefrom);
 
   . 음의 정수일 경우 파일의 시작 위치를 향해서 파일 위치 지시자가 이동함
 
--- 그림으로 표현
+![1](https://user-images.githubusercontent.com/29933947/35545197-4566680a-05b1-11e8-9d51-737428aef0fd.png)
 
 
 
@@ -351,7 +365,7 @@ int main(void)
 }
 ```
 
---- 출력결과 확인
+![14](https://user-images.githubusercontent.com/29933947/35544671-fe190ff4-05ae-11e8-8e8d-f99d0b4eccb5.png)
 
 
 
@@ -379,21 +393,21 @@ int main(void)
   // Write
   fp = fopen("friend.bin", "wb");
   printf("이름, 성별, 나이 순 입력: ");
-  scanf("%s %sc %d", myfren1.name, &(myfren1.sex), &(myfren1.age));
+  scanf("%s %s %d", myfren1.name, &(myfren1.sex), &(myfren1.age));
   fwrite((void*)&myfren1, sizeof(myfren1), 1, fp);
   fclose(fp);
   
   // Read
   fp = fopen("friend.bin", "rb");
   fread((void*)&myfren2, sizeof(myfren2), 1, fp);  
-  printf("%s %sc %d", myfren2.name, &(myfren2.sex), &(myfren2.age));
+  printf("%s %s %d", myfren2.name, &(myfren2.sex), myfren2.age);
   fclose(fp);
   
   return 0;
 }
 ```
 
-
+![16](https://user-images.githubusercontent.com/29933947/35544923-117e1fc0-05b0-11e8-8b07-b923ba821559.png)
 
 
 
