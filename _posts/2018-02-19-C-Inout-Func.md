@@ -12,6 +12,8 @@ C언어 입출력 함수에 대해 기술한다
 
   . C언어는 입출력 시, Buffer OverFlow(BOF)의 위험 존재
 
+
+
 ##### 취약함수
 
 ```c
@@ -25,6 +27,8 @@ fscanf, sscanf, fgets, strncpy, strncat
 ```
 
 > scanf_s 등의 _s 접미어로 붙는 함수는 gcc 표준함수가 아님. Microsoft 에서 제공하는 함수
+
+
 
 
 
@@ -49,6 +53,8 @@ fscanf, sscanf, fgets, strncpy, strncat
 
 char * fgets(char * s, int n, FILE * stream);
 ```
+
+
 
 
 
@@ -91,6 +97,10 @@ int main(void)
 ```
 
 ![3](https://user-images.githubusercontent.com/29933947/36020576-8edc8718-0dc6-11e8-8e6c-422078f5a9f4.png)
+
+
+
+
 
 #### 문자열 형변환 함수
 
