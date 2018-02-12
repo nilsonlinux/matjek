@@ -370,3 +370,246 @@ int main(void){
 
 
 
+### bool 자료형
+
+  . ture, false의 상태를 나타내기 위한 자료형
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+bool IsPositive(int i)
+{
+    if(i<0)
+        return false;
+    else
+        return true;
+}
+
+int main(void)
+{
+    int num;
+    bool result;
+
+    cout << "입력(숫자) : ";
+    cin >> num;
+
+    result = IsPositive(num);
+
+    if(result == true)
+        cout << "Positive num" << endl;
+    else
+        cout << "Negative num" << endl;
+    
+    return 0;
+}
+```
+
+![7](https://user-images.githubusercontent.com/29933947/36085808-de40336c-100b-11e8-8389-076438f1dd3a.png)
+
+
+
+### 레퍼런스 (Reference)
+
+  . 변수 선언으로 할당된 메모리 공간에 하나의 이름을 더 부여하는 방법
+
+  . 레퍼런스를 통한 연산은 레퍼런스가 참조하는 변수의 연산과 동일한 결과를 나타냄
+
+  . ①선언 시, 초기화 되어야 하며, ②선언 시, 변수 혹은 주소 값을 지정해야함(상수 불가)
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+int main(void)
+{
+    int val = 10;
+    int &ref = val;
+    // 레퍼런스 선언을 위한 & 연산자 사용    
+    // int *ref = &val
+    // 주소 값을 얻기 위한 & 연산자 사용
+  
+  	// int &ref;         초기화 되지 않아 에러 발생
+    // int &ref = 10;    상수 형태가 지정되어 에러 발생
+
+    val++;
+    cout << "after val++ : ref : " << ref << endl;
+    cout << "after val++ : val : " << val << endl;
+
+    ref++;
+    cout << "after ref++ : ref : " << ref << endl;
+    cout << "after ref++ : val : " << val << endl;
+
+    return 0;
+}
+```
+
+![8](https://user-images.githubusercontent.com/29933947/36086666-fdefd050-1010-11e8-964a-c0fbae553fef.png)
+
+
+
+#### Call by Reference
+
+  . 메모리 직접 접근의 위험을 피하기 위해, C++에서 제공하는 레퍼런스를 이용한 Swap 함수 구현
+
+  . 단점은, 아래와 같이, swap(val1, val2)의 형태로 해당 함수가 Call by Value인지, Call by Reference인지 구분 불가
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+void swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main(void)
+{
+    int val1 = 10;
+    int val2 = 20;
+
+    cout << "val1 : " << val1 << " ";
+    cout << "val2 : " << val2 << endl;
+
+    swap(val1, val2);
+    // swap 함수로 전달되게 되면, val1, val2의 주소 공간에 a, b 라는 이름(레퍼런스)가 부여됨
+    // 따라서, C의 포인터와 같이 메모리 직접 접근으로 인한 오류를 사전에 방지
+    
+    cout << "val1 : " << val1 << " ";
+    cout << "val2 : " << val2 << endl;
+
+    return 0;   
+}
+```
+
+![9](https://user-images.githubusercontent.com/29933947/36087082-a762cde8-1013-11e8-89fe-b31ea46e42f8.png)
+
+
+
+  . Call by Reference에서 데이터 조작을 방지하기 위해 Const를 사용할 수 있음
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+struct _Person{
+    int age;
+    char name[20];
+    char personalID[20];
+};
+typedef struct _Person Person;
+
+// void ShowData(Person p) : Call by Value 형태, 메모리 공간의 낭비 발생
+// void ShowData(Person &p) : Call by Reference 형태, 상수화 되지 않아, 구조체 변수의 값을 변경 가능
+void ShowData(const Person &p)  // Call by Reference 형태이나 상수화 되어 변수의 값을 변경 불가
+{
+    cout << "================ 개인 정보 출력 ================" <<endl;
+    cout << " 이 름 : " << p.name << endl;
+    cout << " 나 이 : " << p.age << endl;
+    cout << " 주민번호 : " << p.personalID << endl;
+    cout << "===============================================" <<endl;
+}
+
+int main(void){
+    Person man;
+
+    cout << " 이름 입력 : ";
+    cin >> man.name;
+    cout << " 나이 입력 : ";
+    cin >> man.age;
+    cout << " 주민번호 입력 : ";
+    cin >> man.personalID;
+
+    ShowData(man);
+
+    return 0;
+}
+```
+
+![10](https://user-images.githubusercontent.com/29933947/36089188-e80b1882-101d-11e8-860f-c29e0276832b.png)
+
+
+
+#### 함수 리턴 값으로 사용되는 레퍼런스
+
+  . 함수의 지역변수를 리턴 값으로 전달하는 오류를 주의할 것
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+int& function(int &val){
+    val++;
+    return val;
+}
+
+/*  아래의 형태는, 지역변수를 리턴 값으로 전달하고 있음
+    지역변수는 함수 호출 종료 후, 사라지기 때문에 리턴 값으로 쓰일 경우
+    값을 장담할 수 없음
+    Error 발생 주의
+    int& function(void){
+    int val =20;
+    return val;
+}
+*/
+
+int main(void){
+    int num = 10;
+    int &ref = function(num);
+
+    cout << "num : " << num << endl;
+    cout << "ref : " << ref << endl;
+
+    return 0;
+}
+```
+
+![11](https://user-images.githubusercontent.com/29933947/36089470-6d09151a-101f-11e8-80c5-85fabad5ef5d.png)
+
+
+
+### new, delete 연산자
+
+  . C언어의 malloc, free 연산자의 역할을 수행함
+
+  . malloc 함수의 void 포인터형으로 반환으로 인한 형변환이 필수인 단점을 개선
+
+  . 또한 malloc 함수 사용 시, 메모리 공간 크기 계산 과정도 필요 없음
+
+​    `int* arr = (int *)malloc(sizeof(int) * size);`
+
+  . 형변환 없이 힙(heap) 영역에 메모리 공간을 할당할 수 있음
+
+```c++
+// new, delete 연산자 활용 메모리 할당 선언과 반환 방법
+...
+  
+  // int형 데이터 저장을 위한 메모리 할당
+  int * val = new int;
+  // int형 배열을 위한 메모리 할당
+  int * arr = new int[size];
+
+  // val이 가리키는 메모리 반환
+  delete val;
+  // arr이 가리키는 배열에 할당된 메모리 반환
+  delete []arr;
+  
+  // delete[] arr == delte [] arr == delte []arr
+  
+...
+```
+
