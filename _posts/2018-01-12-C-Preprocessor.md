@@ -111,11 +111,11 @@ int main()
 
    ![5](https://user-images.githubusercontent.com/29933947/34867510-b86027f2-f7c3-11e7-8ffe-29219f055e03.png)
 
+   ​
+
 2. \#ifdef - #endif
 
    . 조건이 정의되었을 경우, 해당 코드를 수행함
-
-   . 헤더 파일의 중복포함을 막기 위해 사용됨
 
    ```java
    #include <stdio.h>
@@ -143,7 +143,15 @@ int main()
 
    ![4](https://user-images.githubusercontent.com/29933947/34866479-04082406-f7c0-11e7-8c61-315cfad259a1.png)
 
-3. \#elseif, #else
+3. \#ifndef, #endif
+
+   . 정의되지 않았다면, 지정된 정의를 수행
+
+   . 헤더 파일의 중복포함을 막기 위해 사용됨
+
+   ​
+
+4. \#elseif, #else
 
    . if문의 else, elseif 와 같은 역할
 
