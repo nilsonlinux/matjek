@@ -14,11 +14,14 @@ C++ static, const, explicit, mutable 에 대해 정리한다.
 
 ### explicit
 
-  . 명시적 호출만을 허용
+  . 명시적[^1] 호출만을 허용
 
-  . 아래 예제에서 `explicit` 선언을 한 생성자에 대해서는, 묵시적 호출을 허용하지 않아, 에러가 발생함
+  . 아래 예제에서 `explicit` 선언을 한 생성자에 대해서는, 묵시적[^2] 호출을 허용하지 않아, 에러가 발생함
 
   . `explicit` 선언은 객체 생성 관계를 분명히 하고자 하는 경우에 사용됨
+
+[^1]: 내용이나 뜻을 분명하게 드러내 보이는
+[^2]: 직접적으로 말이나 행동으로 드러내지 않고 은연중에 뜻을 나타내 보이는
 
 ```c++
 #include <iostream>
@@ -35,7 +38,7 @@ class First{
 
 int main(void)
 {
-    First first = 10;
+    First first = 10;	// 묵시적으로 First first(10); 으로 변환됨
     return 0;
 }
 ```
