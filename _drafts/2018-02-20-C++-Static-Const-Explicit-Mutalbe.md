@@ -113,8 +113,8 @@ void ShowData() const
   . 멤버 함수가 상수화 되면
 
 1.  해당 함수를 통해 멤버 변수의 값이 변경되는 것이 허용되지 않음
-2. 상수화되지 않은 함수의 호출을 허용하지 않음
-3. 멤버 변수의 포인터를 리턴하는 것을 허용하지 않음
+2.  상수화되지 않은 함수의 호출을 허용하지 않음
+3.  멤버 변수의 포인터를 리턴하는 것을 허용하지 않음
 
 ```c++
 #include <iostream>
@@ -257,6 +257,16 @@ int main()
 
 
 
+
+
+### static
+
+
+
+
+
+
+
 ### explicit
 
   . 명시적[^1] 호출만을 허용
@@ -289,3 +299,47 @@ int main(void)
 ```
 
 ![14](https://user-images.githubusercontent.com/29933947/36365238-f9b05bec-158b-11e8-8cd7-1be8033214bf.png)
+
+
+
+
+
+### mutable
+
+  . const로 상수화된 멤버 함수에서 멤버 변수 조작을 위해 사용함
+
+```c++
+#include <iostream>
+using std::cout;
+using std::endl;
+
+class mutable_test{
+    private:
+        mutable int val1;
+        int val2;
+    public:	
+  		// 생성자 멤버 변수 초기화
+        mutable_test() : val1(0), val2(0) {}
+        void SetData(int a, int b) const
+        {
+            val1 = a;       // mutable val1 이므로 오류 없이 변경 가능
+            // val2 = b;    // 상수화된 멤버함수는 멤버변수를 변경할 수 없음
+        }        
+        void ShowData()
+        {
+            cout << "val1: " << val1 << endl;
+            cout << "val2: " << val2 << endl;
+        }
+};
+
+int main()
+{
+    mutable_test m1;
+    m1.SetData(10, 20);
+    m1.ShowData();
+
+    return 0;
+}
+```
+
+![3](https://user-images.githubusercontent.com/29933947/36585195-37b53a52-18c0-11e8-8bcc-6d08544c02a2.png)
