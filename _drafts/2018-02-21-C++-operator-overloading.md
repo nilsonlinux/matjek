@@ -26,6 +26,7 @@ class Point{
     private:
         int x, y;
     public:
+  		// `:` 멤버 이니셜라이져(member initializer) 활용한 생성자 초기화
         Point(int _x=0, int _y=0):x(_x), y(_y){}
         void ShowPosition();
         void operator+(int val);        
@@ -34,6 +35,8 @@ class Point{
 void Point::ShowPosition(){
     cout << x << " " << y << endl;
 }
+
+// 연산자 오버로딩
 void Point::operator+(int val)
 {
     x += val;
@@ -47,6 +50,8 @@ int main(void)
 
     p.operator+(10);
     // p+10;	위 행을 본 행으로 교체하여도 문제 없이 작동함
+  	// 이 때, p가 기본 자료형 변수라면 단순 덧셈 연산
+    // p가 객체라면, p.operator+(10) 으로 변경하여 수행
     p.ShowPosition();
 
     return 0;
@@ -129,7 +134,11 @@ int main(void)
 
 
 
+
+
+
+
 ### 전역 함수에 의한 오버로딩
 
-
+![_ 3](https://user-images.githubusercontent.com/29933947/36707783-3c2223c0-1bb3-11e8-92d1-1f4004ca1125.png)
 
