@@ -14,7 +14,26 @@ C++ 의 연산자 오버로딩에 대해 정리한다.
 
   . 객체도 기본 자료형 변수처럼, 덧셈, 뺄셈 등 연산들을 가능하게 하는 방법
 
+```c++
+... 
+int a = 10 + 20;		// 일반산술연산
+Point p3 = p1 + p2;		// 객체의 경우, 연산자 오버로딩 함수 호출
+...
+```
+
   . `operator` 키워드와 연산자를 묶어 함수의 이름을 정의
+
+##### 주의할 점
+
+> 잘못 사용하거나 남용할 경우, 프로그램을 복잡하고 이해하기 어렵게 만들 수 있음
+
+> 연산자의 우선 순위, 결합성을 바꿀 수 없음
+
+> 디폴트 매개 변수 설정 불가능
+
+> 디폴트 연산자들의 기본 기능을 빼앗을 수 없음 ex) + → A + B + C (이항연산을 삼항연산으로 변경 불가능)
+
+
 
 ```c++
 #include <iostream>
@@ -142,3 +161,51 @@ int main(void)
 
 ![_ 3](https://user-images.githubusercontent.com/29933947/36707783-3c2223c0-1bb3-11e8-92d1-1f4004ca1125.png)
 
+
+
+  . 일반적으로 전역 함수에서 객체 멤버로의 접근(private 멤버로의 외부 함수에서 접근)은 불가능
+
+  . 따라서, 전역 함수에서 연산자 오버로딩을 통한 객체 멤버의 조작을 위해서 `friend` 키워드를 활용함
+
+  . 전역 함수에 의한 오버로딩은 최소화 하는 것이 바람직
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+class Point{
+    private:
+        int x;
+        int y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        void ShowData();
+        // 외부에서 객체 멤버로의 접근을 위한 fried 선언
+        friend Point operator+(const Point& p1, const Point& p2);     
+};
+
+void Point::ShowData(){
+    cout << x << "  " << y << endl;
+}
+
+// 전역함수에 의한 연산자 오버로딩
+Point operator+(const Point& p1, const Point& p2)
+{
+    Point temp(p1.x + p2.x, p1.y + p2.y);
+    return temp;
+}
+
+int main(void)
+{
+    Point p1(10, 20);
+    Point p2(20, 10);
+    Point p3 = p1 + p2;
+    p3.ShowData();  // Point p3 = operator+(p1, p2);
+
+    return 0;
+}
+```
+
+![4](https://user-images.githubusercontent.com/29933947/36711224-a0334e40-1bc5-11e8-9f3e-e0559352ae45.png)
