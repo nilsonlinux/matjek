@@ -209,3 +209,87 @@ int main(void)
 ```
 
 ![4](https://user-images.githubusercontent.com/29933947/36711224-a0334e40-1bc5-11e8-9f3e-e0559352ae45.png)
+
+
+
+
+
+### 단항 연산자의 오버로딩
+
+![_ 1](https://user-images.githubusercontent.com/29933947/36733734-d3ea6c56-1c14-11e8-9c04-c11e528624b6.png)
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+class Point{
+    private:
+        int x;
+        int y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        void ShowData();
+        Point& operator++();
+        // 외부에서 객체 멤버로의 접근을 위한 fried 선언
+        friend Point& operator--(Point& p);     
+};
+
+void Point::ShowData(){
+    cout << x << "  " << y << endl;
+}
+
+Point& Point::operator++()  // 멤버 변수에 의한 오버로딩
+{
+    x++;
+    y++;
+    return *this;		// Class Point로 인해 만들어진 객체 자신을 리턴
+}
+/* 
+   이미 증가연산을 수행하였는데, 객체 자신을 리턴하는 이유 
+   만약 자신을 리턴하지 않는다면,
+   ++(++p); 
+   (++p).ShowData();
+   와 같은 연산과 연결되어 수행하는 명령을 실행할 수 없어 컴파일 에러가 발생함
+*/
+
+// 전역함수에 의한 연산자 오버로딩
+Point& operator--(Point& p)
+{
+    p.x--;
+    p.y--;
+    return p;
+}
+
+int main(void)
+{
+    Point p(10, 20);
+    ++p;    //  객체 p의 x, y 값을 1 씩 증가
+    p.ShowData();
+
+    --p;    //  객체 p의 x, y 값을 1 씩 감소
+    p.ShowData();
+
+    ++(++p);    //  객체 p의 x, y 값을 2 씩 증가
+    p.ShowData();
+
+    --(--p);    //  객체 p의 x, y 값을 2 씩 감소
+    p.ShowData();
+
+    return 0;
+}
+```
+
+![1](https://user-images.githubusercontent.com/29933947/36733516-3782eaf0-1c14-11e8-9684-e10fa9cc0bfa.png)
+
+
+
+  . 위 예제에서 연산자 오버로딩 시, 참조형`Point&` 를 리턴하는 이유
+
+![_ 2](https://user-images.githubusercontent.com/29933947/36734451-e5f631f8-1c16-11e8-97bc-49587629d876.png)
+
+
+
+#### 선 연산과 후연산
+
