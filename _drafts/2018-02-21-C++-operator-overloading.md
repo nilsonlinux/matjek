@@ -216,7 +216,7 @@ int main(void)
 
 ### 단항 연산자의 오버로딩
 
-![_ 1](https://user-images.githubusercontent.com/29933947/36733734-d3ea6c56-1c14-11e8-9c04-c11e528624b6.png)
+![_ 2](https://user-images.githubusercontent.com/29933947/36769844-3bb568fc-1c8a-11e8-95ec-bdd3e143e563.png)
 
 ```c++
 #include <iostream>
@@ -292,4 +292,70 @@ int main(void)
 
 
 #### 선 연산과 후연산
+
+  . 전위(Prefix), 후위(Postfix) 연산자 선언에 대한 정의
+
+
+
+![_ 3](https://user-images.githubusercontent.com/29933947/36769845-3bdca4d0-1c8a-11e8-991c-2febce5715c0.png)
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+class Point{
+    private:
+        int x;
+        int y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        void ShowData();
+        Point& operator++();
+        Point operator++(int);        
+};
+
+void Point::ShowData(){
+    cout << x << "  " << y << endl;
+}
+
+Point& Point::operator++()  // Prefix 연산자
+{
+    x++;
+    y++;
+    return *this;
+}
+
+Point Point::operator++(int)   // Postfix 연산자
+{
+    Point temp(x,y);    // Point temp(*this);
+    // 아래 두줄은 ++(*this); 로 표현이 가능함
+  	x++;		 
+    y++;		
+    return temp;
+}
+
+int main(void)
+{
+    Point p1(10, 20);
+    (p1++).ShowData();    //  1, 2 출력
+    p1.ShowData();        //  2, 3 출력
+
+    Point p2(10, 20);
+    (++p2).ShowData();    //  11, 21 출력
+
+    return 0;
+}
+```
+
+![1](https://user-images.githubusercontent.com/29933947/36769621-c08580b4-1c88-11e8-87c1-5481002ad521.png)
+
+
+
+  . 후위(Postfix) 연산자 정의의 경우, 연산 전의 상태를 저장하기 위한 Temp 객체를 생성하고, 이를 반환한다. 이 때, Point& 형이 아닌 Point 형으로 반환하는 이유는, 지역객체이기 때문에 함수 호출이 끝나면 객체는 소멸되기 때문임
+
+
+
+
 
