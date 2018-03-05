@@ -357,5 +357,341 @@ int main(void)
 
 
 
+### 연산자 오버로딩 관련 교환법칙
 
+#### 피연산자의 값을 변경시키지 않는 연산자 오버로딩
+
+  . 아래 연산 방식은, 피연산자의 멤버 변수의 값을 변경 시킴
+
+```c++
+...
+void Point::operator+(int val)
+{
+    x += val;
+    y += val;
+}
+
+int main(void)
+{
+    Point p(1,5);
+    p.ShowPosition();
+
+    p.operator+(10);
+    // p+10;
+    p.ShowPosition();
+
+    return 0;
+}
+...
+```
+
+
+
+  . 피연산자의 멤버 변수의 값을 변경 시키지 않고, 결과를 도출하는 방법
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+class Point{
+    private:
+        int x, y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        void ShowPosition();
+        Point operator+(int val);        
+};
+
+void Point::ShowPosition(){
+    cout << x << " " << y << endl;
+}
+// 임시 Point 객체를 생성하여, 연산을 수행함
+// 해당 방식으로, 피연산자의 값 변화 없이 결과를 도출할 수 있음
+Point Point::operator+(int val)
+{
+    Point temp(x+val, y+val);
+    return temp;
+}
+
+int main(void)
+{
+    Point p1(1,5);
+    p1.ShowPosition();
+
+    Point p2 = p1.operator+(10);
+    // p2 = p1 + 10;  
+    cout << "Point p2 member: " <<endl;  
+    p2.ShowPosition();    
+
+    cout << "Point p1 member: " <<endl;  
+    p1.ShowPosition();    
+    return 0;
+}
+```
+
+![1](https://user-images.githubusercontent.com/29933947/36959779-30b53d32-2087-11e8-9925-7eaaebac43cf.png)
+
+
+
+
+
+#### 피연산자의 교환이 가능한 연산자 오버로딩
+
+  . 앞의 예제는 피연산자간의 교환이 성립되지 않음
+
+  . 이를 해결하기 위해서는 `전역함수` 에 의한 연산자 오버로딩 방법을 사용해야 함
+
+```c++
+...
+  p2 = p1 + 10;
+  p2 = 10 + p1;
+  // p2 = 10.operator+(p);
+  // 위의 형태는 컴파일러가 해석할 수 없음 
+...
+```
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+class Point{
+    private:
+        int x, y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        void ShowPosition();
+        Point operator+(int val);  
+        // 피연산자의 위치 교환 시, 사용될 함수 선언 
+        // 전역함수 연산자 오버로딩 방법을 사용함
+        friend Point operator+(int val, Point & p);      
+};
+
+void Point::ShowPosition(){
+    cout << x << " " << y << endl;
+}
+
+Point Point::operator+(int val)
+{
+    Point temp(x+val, y+val);
+    return temp;
+}
+
+Point operator+(int val, Point & p)
+{
+    return p+val;
+}  
+
+int main(void)
+{
+    Point p1(1,5);
+    
+    Point p2 = p1 + 10;
+    p2.ShowPosition();
+
+  	// 객체의 피연산 위치가 바뀜, 해당 연산은 전역함수 형태의 연산자 오버로딩 함수를 호출한다
+    Point p3 = 100 + p2;
+    p3.ShowPosition();
+    
+    return 0;
+}
+```
+
+![2](https://user-images.githubusercontent.com/29933947/36960169-24c8034a-2089-11e8-974c-a9ed1772e558.png)
+
+
+
+#### 임시객체 생성의 의미
+
+  . 위 예제의 `temp(x+val, y+val)` 의 형태를 `return Point(x+val, y+val)` 로 변경 가능함
+
+```c++
+Point Point::operator+(int val)
+{    
+    return Point(x+val, y+val);
+  	// Point 객체의 이름이 없음
+  	// 해당 줄을 벗어나면 바로 소멸됨
+}
+```
+
+  . 임시 객체는 `"이름이 없으며, 생성한 이후 그 줄에서 사용하지 않으면 바로 소멸됨"`
+
+
+
+```c++
+#include <iostream>
+#include <string.h>
+
+using std::cout;
+using std::endl;
+
+class Temp{
+    char name[30];
+    public:
+        Temp(char * _name){
+            strcpy(name, _name);
+            cout << name << "객체가 생성됨" << endl;            
+        }
+        ~Temp(){            
+            cout << name << "객체가 소멸됨" << endl;            
+        }
+};
+
+int main(void)
+{
+    Temp aaa("aaa object");
+    cout << "======= 임시 객체 생성 전 =======" << endl;
+  	// 이름이 없는 형태의 임시 객체 생성
+    Temp("temp object");
+    cout << "======= 임시 객체 생성 후 =======" << endl;
+    return 0;
+}
+```
+
+![3](https://user-images.githubusercontent.com/29933947/36960562-e7a89d2e-208a-11e8-94b5-c53f849e265c.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+```c++
+#include <iostream>
+
+namespace mystd     // mystd 이름 공간
+{
+    char * endl = "\n";
+
+    class ostream           // 클래스 ostream 정의
+    {
+        public:
+            // 전달 인자에 따른(데이터 타입에 따른) 출력형식 지정
+            void operator<<(char * str)
+            {
+                printf( "%s", str);
+            }
+            void operator<<(int i)
+            {
+                printf( "%d", i);
+            }
+            void operator<<(double i)
+            {
+                printf( "%e", i);
+            }            
+    };
+    ostream cout;   // ostream 객체 생성
+}
+
+using mystd::cout;
+using mystd::endl;
+
+int main()
+{
+    cout << "Hello \n ";
+    cout << 3.14;
+    cout << endl;
+    cout << 1;
+    cout << endl;
+    return 0;
+}
+```
+
+![4](https://user-images.githubusercontent.com/29933947/36965895-5f5c1446-209e-11e8-9de5-f4378da10969.png)
+
+
+
+
+
+
+
+![_ 1](https://user-images.githubusercontent.com/29933947/36968973-76241b98-20a7-11e8-9244-a345748296f0.png)
+
+```c++
+#include <stdio.h>
+
+namespace mystd     // mystd 이름 공간
+{
+    char * endl = "\n";
+
+    class ostream           // 클래스 ostream 정의
+    {
+        public:
+            // 전달 인자에 따른(데이터 타입에 따른) 출력형식 지정
+            ostream& operator<<(char * str)
+            {
+                printf( "%s", str);
+                return *this;
+            }
+            ostream& operator<<(int i)
+            {
+                printf( "%d", i);
+                return *this;
+            }
+            ostream& operator<<(double i)
+            {
+                printf( "%e", i);
+                return *this;
+            }            
+    };
+    ostream cout;   // ostream 객체 생성
+}
+
+using mystd::cout;
+using mystd::endl;
+
+int main()
+{
+    cout << "Hello World" << endl << 3.14 << endl;
+    return 0;
+}
+```
+
+![6](https://user-images.githubusercontent.com/29933947/36967398-f8dee7ca-20a2-11e8-943c-f03e9f780ab0.png)
+
+
+
+
+
+```c++
+#include <iostream>
+
+using std::endl;
+using std::cout;
+
+using std::ostream;
+
+class Point{
+    private:
+        int x, y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        friend ostream& operator<<(ostream& os, const Point& p);
+};
+
+ostream& operator<<(ostream& os, const Point& p)
+{
+    os << " [ " << p.x << " , " << p.y << " ] " << endl;
+    return os;
+}
+
+int main(void)
+{
+    Point p(1, 5);
+    cout << p;      // operator<<(cout, p) 로 호출
+    return 0;
+}
+
+```
+
+![7](https://user-images.githubusercontent.com/29933947/36968092-dea91ec8-20a4-11e8-9b78-883071ccda63.png)
 
