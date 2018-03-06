@@ -557,13 +557,9 @@ int main(void)
 
 
 
+### 연산자 오버로딩을 활용한 C++ 기초 입출력
 
-
-
-
-
-
-
+  . cout, cin, endl은 실제로 연산자 오버로딩으로 구현됨
 
 ```c++
 #include <iostream>
@@ -608,13 +604,21 @@ int main()
 
 ![4](https://user-images.githubusercontent.com/29933947/36965895-5f5c1446-209e-11e8-9de5-f4378da10969.png)
 
+  . 위의 예제에서, 
+
+```c++
+cout << "string" 은 cout 객체의 오버로딩 된 멤버 함수 operator << ("string")의 호출 문장
+```
 
 
 
+#### 연산 결합 지원
 
+> cout << "Hello" << 100 << endl; 
 
+  . 연산자를 오버로딩하고 있는 operator << 함수가 cout 객체를 반환해야 함
 
-![_ 1](https://user-images.githubusercontent.com/29933947/36968973-76241b98-20a7-11e8-9244-a345748296f0.png)
+![_ 1 2](https://user-images.githubusercontent.com/29933947/37038907-74938c62-2199-11e8-9e59-559befd36e68.png)
 
 ```c++
 #include <stdio.h>
@@ -627,7 +631,7 @@ namespace mystd     // mystd 이름 공간
     {
         public:
             // 전달 인자에 따른(데이터 타입에 따른) 출력형식 지정
-            ostream& operator<<(char * str)
+            ostream& operator<<(char * str)	// & 참조에 의한 리턴
             {
                 printf( "%s", str);
                 return *this;
@@ -660,7 +664,15 @@ int main()
 
 
 
+#### 객체 멤버 변수를 출력하는 방법
 
+  . 예를 들어 x, y의 두 멤버 변수를 지닌 객체에 대해 출력을 수행할 때,
+
+> Point p(1, 2)
+>
+> cout<< p;  
+
+  . 위의 경우, `[ 1, 2 ]` 형식으로 출력되는 것을 원한다면 `전역 함수에 의한 오버로딩 방식` 을 사용해야 함
 
 ```c++
 #include <iostream>
@@ -668,6 +680,8 @@ int main()
 using std::endl;
 using std::cout;
 
+// <<의 전역 함수에 의한 오버로딩을 위해, cout 객체를 인자로 전달 받음
+// cout 객체는 std의 ostream 클래스에 선언되어 있으므로, ostream을 사용하기 위한 선언이 필요
 using std::ostream;
 
 class Point{
@@ -676,9 +690,10 @@ class Point{
     public:
         Point(int _x=0, int _y=0):x(_x), y(_y){}
         friend ostream& operator<<(ostream& os, const Point& p);
+  		// 전역함수가 Point  클래스에 접근하기 위한 friend 선언
 };
 
-ostream& operator<<(ostream& os, const Point& p)
+ostream& operator<<(ostream& os, const Point& p)	// 전역 함수에 의한 오버로딩 방식
 {
     os << " [ " << p.x << " , " << p.y << " ] " << endl;
     return os;
@@ -694,4 +709,10 @@ int main(void)
 ```
 
 ![7](https://user-images.githubusercontent.com/29933947/36968092-dea91ec8-20a4-11e8-9b78-883071ccda63.png)
+
+
+
+### 배열의 인덱스 연산자 오버로딩
+
+
 
