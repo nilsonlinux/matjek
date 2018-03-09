@@ -716,9 +716,244 @@ int main(void)
 
 #### 일반 자료형 배열 인덱스 연산자 오버로딩
 
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+const int SIZE=3;
+
+class Arr{
+    private:
+        int arr[SIZE];
+        int index;
+    public:                 // i = index
+        Arr():index(0){}
+        int GetarrItem(int i);
+        void SetarrItem(int i, int item);   
+        void AddarrItem(int item);
+        void ShowData();    
+};
+
+int Arr::GetarrItem(int i){
+    return arr[i];
+}
+
+void Arr::SetarrItem(int i, int item){
+    if(index <= i)
+    {
+        cout << "non-existence" << endl;
+        return;
+    }
+    arr[i] = item;
+}
+
+void Arr::AddarrItem(int item){
+    if(index >= SIZE)
+    {
+        cout << "index is over the arr size" << endl;
+        return;
+    }
+    arr[index++] = item;
+}
+
+void Arr::ShowData(){
+    for(int i = 0; i < index; i++)
+    {
+        cout << "arr [ "<< i <<" ]= " << arr[i] << endl;
+    }
+}
+
+int main(void){
+    Arr arr;
+    arr.AddarrItem(1);
+    arr.AddarrItem(2);
+    arr.AddarrItem(3);
+    arr.ShowData();
+
+    arr.SetarrItem(0,10);
+    arr.SetarrItem(1,20);
+    arr.SetarrItem(2,30);
+
+    cout << arr.GetarrItem(0) << endl;
+    cout << arr.GetarrItem(1) << endl;
+    cout << arr.GetarrItem(2) << endl;
+
+    return 0;
+}
+```
+
+
+
+
+
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+const int SIZE=3;
+
+class Arr{
+    private:
+        int arr[SIZE];
+        int index;
+    public:                 // i = index
+        Arr():index(0){}
+        int GetarrItem(int i);
+        void SetarrItem(int i, int item);   
+        void AddarrItem(int item);
+        void ShowData();    
+        int& Arr::operator[](int i);
+};
+
+int Arr::GetarrItem(int i){
+    return arr[i];
+}
+
+void Arr::SetarrItem(int i, int item){
+    if(index <= i)
+    {
+        cout << "non-existence" << endl;
+        return;
+    }
+    arr[i] = item;
+}
+
+void Arr::AddarrItem(int item){
+    if(index >= SIZE)
+    {
+        cout << "index is over the arr size" << endl;
+        return;
+    }
+    arr[index++] = item;
+}
+
+void Arr::ShowData(){
+    for(int i = 0; i < index; i++)
+    {
+        cout << "arr [ "<< i <<" ]= " << arr[i] << endl;
+    }
+}
+
+int& Arr::operator[](int i){
+    return arr[i];
+}
+
+int main(void){
+    Arr arr;
+    arr.AddarrItem(1);
+    arr.AddarrItem(2);
+    arr.AddarrItem(3);
+    arr.ShowData();
+
+    /*
+    arr.SetarrItem(0,10);
+    arr.SetarrItem(1,20);
+    arr.SetarrItem(2,30);
+    */
+
+    arr[0] = 10;       // arr.operator[](0)
+    arr[1] = 20;
+    arr[2] = 20;
+
+    /*
+    cout << arr.GetarrItem(0) << endl;
+    cout << arr.GetarrItem(1) << endl;
+    cout << arr.GetarrItem(2) << endl;
+    */
+
+    cout << arr[0] << endl;
+    cout << arr[1] << endl;
+    cout << arr[2] << endl;
+
+    return 0;
+}
+```
+
+
+
+
+
+
+
+
+
 #### 객체 배열 인덱스 연산자 오버로딩
 
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
 
+using std::ostream;
+
+const int SIZE=5;
+
+/*-------------- Point Class ---------------*/
+class Point{
+    private:
+        int x, y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        friend ostream& operator<<(ostream& os, const Point& p);
+};
+
+ostream& operator<<(ostream& os, const Point& p){
+        os << " [ " << p.x << " , " << p.y << " ] ";
+        return os;
+}
+
+/*-------------- PointArr Class ---------------*/
+class PointArr{
+    private:
+        Point arr[SIZE];
+        int index;
+    public:                 // i = index
+        PointArr():index(0){}
+        void AddarrItem(const Point& item);
+        void ShowData();            
+        Point& operator[](int i);   // 배열 요소 접근 연산자 오버로딩
+};
+
+void PointArr::AddarrItem(const Point& item){
+    if(index >= SIZE)
+    {
+        cout << "index is over the arr size" << endl;
+        return;
+    }
+    arr[index++] = item;
+}
+
+void PointArr::ShowData(){
+    for(int i = 0; i < index; i++)
+    {
+        cout << "arr [ "<< i <<" ]= " << arr[i] << endl;
+    }
+}
+
+Point& PointArr::operator[](int i){
+    return arr[i];
+}
+
+int main(void){
+    PointArr arr;
+    arr.AddarrItem(Point(1,1));   // 임시 객체 형태, 생성되자마자 배열 복사 후, 소멸
+    arr.AddarrItem(Point(2,2));
+    arr.AddarrItem(Point(3,3));
+    arr.ShowData();
+
+    arr[0] = Point(10, 10);       // arr.operator[](0)
+    arr[1] = Point(20, 20);
+    arr[2] = Point(30, 30);
+
+    cout << arr[0] << endl;
+    cout << arr[1] << endl;
+    cout << arr[2] << endl;
+
+    return 0;
+}
+```
 
 
 
@@ -726,5 +961,130 @@ int main(void)
 
 #### default 대입 연산자
 
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+using std::ostream;
+
+class Point{
+    private:
+        int x, y;
+    public:
+        Point(int _x=0, int _y=0):x(_x), y(_y){}
+        friend ostream& operator<<(ostream& os, const Point& p);
+};
+
+ostream& operator<<(ostream& os, const Point& p){
+        os << " [ " << p.x << " , " << p.y << " ] ";
+        return os;
+}
+
+/*  자동으로 생성되는 default 대입 연산자 정의
+    리턴 타잎이 Point& 이며, 자기자신(this)를 리턴하는 이유는, p1 = p2 = p3; 와 같은
+    연속적인 대입연산에 대응하기 위함
+    Point& Point::operator=(const Point& p)
+    {
+        x = p.x;
+        y = p.y;
+        return *this;
+    }
+*/
+
+int main(void){
+    Point p1(1, 2);
+    Point p2(10, 20);
+    cout << p1 << endl;
+    cout << p2 << endl;
+
+    p1 = p2; // p1.operator=(p2);
+    cout << p1 << endl;
+
+    return 0;
+}
+```
+
+
+
 #### 깊은 복사(Deep copy) 대입 연산자
+
+
+
+![_ 1](https://user-images.githubusercontent.com/29933947/37195923-18b80ff0-23b8-11e8-87d0-ef16c684e561.png)
+
+```c++
+#include <iostream>
+#include <string.h>
+
+using std::endl;
+using std::cout;
+using std::ostream;
+
+class Person{
+    private:
+        char* name;
+    public:
+        Person(char* _name);
+        Person(const Person& p);
+        ~Person();
+        friend ostream& operator<<(ostream& os, const Person& p);
+};
+
+Person::Person(char* _name){
+    name = new char[strlen(_name)+1];
+    strcpy(name, _name);
+}
+Person::Person(const Person& p){
+    name = new char[strlen(p.name)+1];
+    strcpy(name, p.name);
+}
+Person::~Person(){
+    delete[] name;
+}
+
+/*  자동으로 생성되는 default 대입 연산자 정의
+    리턴 타잎이 Point& 이며, 자기자신(this)를 리턴하는 이유는, p1 = p2 = p3; 와 같은
+    연속적인 대입연산에 대응하기 위함
+    Person& Person::operator=(const Person& p)
+    {
+        name = p.name;        
+        return *this;
+    }
+    
+    해당 default 대입 연산자는 sallow copy을 수행 (멤버 변수 간 복사)
+     - 두 개의 객체 사용 시, 특정 멤버 변수는 소멸자에 의해 메모리 공간 삭제 콜이 두번 일어남(에러발생)
+     - 두 개의 객체 사용 시, 특정 멤버 변수가 지니고 있던 값을 가르키는 데이터가 변경되어, 데이터는 있으나, 소멸되지 않는 메모리 공간 발생
+*/
+
+// deep copy 를 수행하는 default 대입 연산자 정의
+Person& Person::operator=(const Person& p)
+{
+    delete [] name;
+    name = new char[strlen(p.name)+1];
+    strcpy(name, p.name);
+    return *this;
+}    
+
+
+ostream& operator<<(ostream& os, const Person& p){
+    os << p.name;
+    return os;
+}
+
+int main()
+{
+    Person p1("KIM");
+    Person p2("LEE");
+
+    cout << p1 << endl;
+    cout << p2 << endl;
+
+    p1 = p2;    // shallow copy
+
+    cout << p1 << endl;
+
+    return 0;
+}
+```
 
