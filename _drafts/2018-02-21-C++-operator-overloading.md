@@ -729,12 +729,13 @@ class Arr{
         int index;
     public:                 // i = index
         Arr():index(0){}
-        int GetarrItem(int i);
-        void SetarrItem(int i, int item);   
-        void AddarrItem(int item);
+        int GetarrItem(int i);				// 요소 참조 함수
+        void SetarrItem(int i, int item);   // 저장된 요소 변경 함수
+        void AddarrItem(int item);			// 데이터를 배열에 저장하는 함수
         void ShowData();    
 };
 
+// 매개변수는 배열의 인덱스
 int Arr::GetarrItem(int i){
     return arr[i];
 }
@@ -749,7 +750,8 @@ void Arr::SetarrItem(int i, int item){
 }
 
 void Arr::AddarrItem(int item){
-    if(index >= SIZE)
+  	// 배열의 범위를 넘어서지 않는지 검사
+    if(index >= SIZE) 
     {
         cout << "index is over the arr size" << endl;
         return;
@@ -785,7 +787,7 @@ int main(void){
 
 
 
-
+  . 위의 예제를 배열의 인덱스 연산자( [ , ] ) 로  접근할 수 있도록 수정함
 
 ```c++
 #include <iostream>
@@ -871,7 +873,7 @@ int main(void){
 }
 ```
 
-
+  . `arr [ 0 ] = 10 `  에서 , arr[i] 는 L-value로 사용되고 있음. 따라서, <span style="color:red" "font:bold">참조에 의한 리턴</span>이 이루어져야 값을 저장할 수 있음
 
 
 
