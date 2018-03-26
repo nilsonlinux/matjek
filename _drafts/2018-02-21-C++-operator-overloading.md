@@ -873,7 +873,7 @@ int main(void){
 }
 ```
 
-  . `arr [ 0 ] = 10 `  에서 , arr[i] 는 L-value로 사용되고 있음. 따라서, <span style="color:red" "font:bold">참조에 의한 리턴</span>이 이루어져야 값을 저장할 수 있음
+  . `arr [ 0 ] = 10 `  에서 , arr[i] 는 L-value로 사용되고 있음. 따라서, <span style="color:red" "font-weight:bold">참조에 의한 리턴</span>이 이루어져야 값을 저장할 수 있음
 
 
 
