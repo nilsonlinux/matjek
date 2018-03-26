@@ -879,9 +879,9 @@ int main(void){
 
 
 
-
-
 #### 객체 배열 인덱스 연산자 오버로딩
+
+  . 객체를 저장할 수 있는 배열 클래스 
 
 ```c++
 #include <iostream>
@@ -963,6 +963,8 @@ int main(void){
 
 #### default 대입 연산자
 
+  . 멤버 변수 대 멤버 변수의 복사가 이루어지는 `=` 연산자의 디폴트 오버로딩 = 얕은 복사(shallow copy)
+
 ```c++
 #include <iostream>
 using std::endl;
@@ -984,7 +986,7 @@ ostream& operator<<(ostream& os, const Point& p){
 }
 
 /*  자동으로 생성되는 default 대입 연산자 정의
-    리턴 타잎이 Point& 이며, 자기자신(this)를 리턴하는 이유는, p1 = p2 = p3; 와 같은
+    리턴 타입이 Point& 이며, 자기자신(this)를 리턴하는 이유는, p1 = p2 = p3; 와 같은
     연속적인 대입연산에 대응하기 위함
     Point& Point::operator=(const Point& p)
     {
@@ -1010,6 +1012,12 @@ int main(void){
 
 
 #### 깊은 복사(Deep copy) 대입 연산자
+
+  . 디폴트 대입 연산자의 문제점
+
+​    ① 얕은 복사(Shallow copy) : 멤버 변수 값 복사 시, 단순히 포인터 값만 복사하기 때문에, 객체가 소멸되는 시점에 특정 값은 두 번 삭제를 시도하는 문제점을 가짐( 밑의 "LEE" 의 경우 두번 삭제가 호출됨)
+
+​    ② 메모리 유출 : 멤버 변수 복사가 끝나 포인터가 가리키는 위치가 바뀐 값("KIM")의 경우, 소멸되지 않고 프로그램이 종료될 때까지 메모리에 계속 남아있게 됨
 
 
 
@@ -1061,10 +1069,10 @@ Person::~Person(){
 
 // deep copy 를 수행하는 default 대입 연산자 정의
 Person& Person::operator=(const Person& p)
-{
-    delete [] name;
-    name = new char[strlen(p.name)+1];
-    strcpy(name, p.name);
+{  
+    delete [] name;		// 디폴트 대입 연산자의 두 번째 문제점인, 메모리 유출을 방지
+    name = new char[strlen(p.name)+1];	// 깊은 복사 (deep copy)
+    strcpy(name, p.name);				// 깊은 복사 (deep copy)
     return *this;
 }    
 
