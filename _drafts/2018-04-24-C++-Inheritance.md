@@ -14,6 +14,8 @@ C++의 상속 개념 및 사용법에 관해 정리한다.
 
 > 기존에 정의한 클래스를 재활용하기 위한 방법
 
+> 클래스의 공통되는 부분을 Base 클래스로 추상화 하고, 특징을 지닌 Derived 클래스를 정의할 수 있음
+
   . AA 클래스가 A 클래스를 상속할 경우
 
 ​    : B 클래스는 "A 클래스에 선언되어 있는 멤버 + B 클래스에 선언된 멤버" 를 지님
@@ -289,4 +291,185 @@ int main(void)
 ![8](https://user-images.githubusercontent.com/29933947/39179286-e4497172-47ee-11e8-9eb4-19dc674e791f.png)
 
   . 상속받은 클래스에 대한 객체 소멸 시, 상속하는 클래스의 소멸자 호출!
+
+
+
+### protected 멤버
+
+  `protected 멤버는 외부에서 볼 때 private, 상속 관계에서는 public`
+
+  `protected 멤버는 상속 관계에서만 접근을 허용함`
+
+
+
+```c++
+#include <iostream>
+#include <cstring>
+
+using std::endl;
+using std::cout;
+
+class AAA{
+    private:
+        int a;
+    protected:
+        int b; 
+};
+
+class BBB : public AAA{
+    public:
+        void SetData(){
+            // a = 10; // private member, Compile Error
+            b = 20; // protected member, working
+        }    
+};
+
+int main(void)
+{    
+    AAA aaa;
+    // aaa.a = 10; // private member, Compile Error
+    // aaa.b = 20; // protected member, Compile Error
+
+    BBB bbb;
+    bbb.SetData();   
+
+    return 0;
+}
+```
+
+
+
+### 상속 형태
+
+![_ 6](https://user-images.githubusercontent.com/29933947/39181318-3eb9ee7a-47f4-11e8-8427-daceb535cbba.png)
+
+  . 각각의 상속은 본인보다 접근 권한이 넓은 것을 본인하고 동일하게 맞춤
+
+
+
+
+
+### 상속 조건
+
+#### IS-A 관계
+
+![_ 7](https://user-images.githubusercontent.com/29933947/39181888-0820b46e-47f6-11e8-8a3e-d269b8494e0b.png)
+
+
+
+#### HAS-A 관계
+
+![_ 8](https://user-images.githubusercontent.com/29933947/39182054-82bbeca2-47f6-11e8-971f-75375f767e53.png)
+
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+class Cudgel{
+    public:
+        void Swing(){ cout << "Swing a cudgel!" << endl; }    
+};
+
+class Police : public Cudgel
+{
+    public:
+        void UseWeapon(){ Swing(); }
+};
+
+int main()
+{
+    Police p1;
+    p1.UseWeapon();
+    return 0;
+}
+```
+
+![9](https://user-images.githubusercontent.com/29933947/39182401-c0c95f56-47f7-11e8-8f6c-4e10bfa08e11.png)
+
+
+
+##### HAS-A 관계와 유사한 역할을 하는 포함관계-1
+
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+class Cudgel{
+    public:
+        void Swing(){ cout << "Swing a cudgel!" << endl; }    
+};
+
+class Police
+{
+    Cudgel cud;     // 클래스 객체를 멤버화
+    public:
+        void UseWeapon(){ cud.Swing(); }
+};
+
+int main()
+{
+    Police p1;
+    p1.UseWeapon();
+    return 0;
+}
+```
+
+![10](https://user-images.githubusercontent.com/29933947/39183183-24b9b95a-47fa-11e8-883f-5910502c21d2.png)
+
+
+
+![_ 9](https://user-images.githubusercontent.com/29933947/39183485-1eb75674-47fb-11e8-8af5-65444a9b711c.png)
+
+
+
+##### HAS-A 관계와 유사한 역할을 하는 포함관계-2
+
+```c++
+#include <iostream>
+using std::endl;
+using std::cout;
+
+class Cudgel{
+    public:
+        void Swing(){ cout << "Swing a cudgel!" << endl; }    
+};
+
+class Police
+{
+    Cudgel* cud;     // 클래스 객체를 멤버화
+    public:
+        Police(){
+            cud = new Cudgel;            
+        }
+        ~Police(){
+            delete cud;
+        }
+        void UseWeapon(){ cud->Swing(); }
+};
+
+int main()
+{
+    Police p1;
+    p1.UseWeapon();
+    return 0;
+}
+```
+
+![11](https://user-images.githubusercontent.com/29933947/39183184-24e63cdc-47fa-11e8-826d-2da314025d80.png)
+
+
+
+![_ 10](https://user-images.githubusercontent.com/29933947/39183504-312de2dc-47fb-11e8-82df-157de38c9b2f.png)
+
+
+
+
+
+
+
+### 상속된 객체와 포인터
+
+
 
