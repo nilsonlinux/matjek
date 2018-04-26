@@ -10,8 +10,6 @@ C++의 가상함수와 다중 상속에 대해 정리한다.
 
 ------
 
-
-
 ###가상함수 동작 방식
 
 ```c++
@@ -145,4 +143,86 @@ int main(void){
 
 
 #### Virtual Base 클래스
+
+```c++
+#include <iostream>
+using std::cout;
+using std::endl;
+
+class Base{
+    public:
+        void String1(){
+            cout << " Base::String " << endl;
+        }
+};
+
+// class Derived1 : virtual public Base
+class Derived1 : public Base {
+    public:
+        void String2(){
+            cout << " Derived1::String " << endl;
+        }
+};
+
+// class Derived2 : virtual public Base
+class Derived2 : public Base {
+    public:
+        void String3(){
+            cout << " Derived2::String " << endl;
+        }
+};
+
+class Last : public Derived1, public Derived2{
+    public:
+        void ShowString(){
+          	// ambiguous 오류 발생
+            // String1()이, Derived1, Derived2 어느 String1을 호출할 것인지 모름
+            String1();      // Base 클래스의 String1
+            String2();      // Derived 클래스의 String2
+            String3();      // Derived 클래스의 String3
+        }
+};
+
+int main(void)
+{
+    Last lll;
+    lll.ShowString();
+
+    return 0;
+}
+```
+
+![1](https://user-images.githubusercontent.com/29933947/39310620-d3396d66-49a5-11e8-8ba5-34fb9d304cfd.png)
+
+
+
+  . 위와 같은 오류는, 아래 도식처럼  Last 클래스가 Base 클래스를 두 번 상속 받기 때문에 발생한 문제이다.
+
+  . 이는 Derived1, Derived2로부터 한 번씩 상속을 받앗기 때문에, 두 번 상속 받게 되는 것임
+
+
+
+![_ 1](https://user-images.githubusercontent.com/29933947/39310121-9313bc6a-49a4-11e8-9944-c7434d79abac.png)
+
+
+
+  . 이를 해결하기 위해서는 Virtual 상속을 활용해야 한다.
+
+  . 위 코드를 아래와 같이 수정하면 오류 없이 실행 가능하다. 단, 다중 상속은 사용하지 않는 것이 좋다.
+
+```c++
+class Derived1 : virtual Base {
+    public:
+        void String2(){
+            cout << " Derived1::String " << endl;
+        }
+};
+
+class Derived2 : virtual Base {
+    public:
+        void String3(){
+            cout << " Derived2::String " << endl;
+        }
+};
+```
 
