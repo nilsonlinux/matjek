@@ -18,10 +18,10 @@ C++ static, const, explicit, mutable 에 대해 정리한다.
 
    ```c++
    const int val1;
-   // val1 = 10;
+   // val1 = 10;      !불가
 
    const doule val2 = 20.0;
-   // val2 = 30.0
+   // val2 = 30.0     !불가
    ```
 
    ​
@@ -31,7 +31,7 @@ C++ static, const, explicit, mutable 에 대해 정리한다.
    ```c++
    int val1 = 10;
    const int * p = &val1;
-   // *p = 20;
+   // *p = 20;       !불가
    ```
 
    ​
@@ -43,7 +43,7 @@ C++ static, const, explicit, mutable 에 대해 정리한다.
    int val2 = 20;
    int const * p = &val1;
    *p = 20;
-   // p = &val2;
+   // p = &val2;    !불가
    ```
 
    ​
@@ -128,24 +128,24 @@ class Count{
         // 생성자, 초기화
         Count() : cnt(0) {}
   
-  		/*	상수화된 함수에서 포인터 리턴을 할 수 없으므로, 컴파일 에러
-        int * GetPtr() const {            
-            return &cnt;
+        /* 상수화된 함수에서 포인터 리턴을 할 수 없으므로, 컴파일 에러
+        int * GetPtr() const {
+             return &cnt;
         }
         */
-  		
-  		// 리턴 포인터(포인터가 가리키는 값)를 상수화
-  		// 따라서, 상수화된 함수 내에서 포인터 값을 리턴할 수 있음
-  		// ※ 포인터를 상수화 시키려면 int * GetPtr
-  		const int * GetPtr() const {
-    		return &cnt;
-		}
-        
-        void Increment(){
-            cnt++;
+  
+        // 리턴 포인터(포인터가 가리키는 값)를 상수화
+        // 따라서, 상수화된 함수 내에서 포인터 값을 리턴할 수 있음
+        // ※ 포인터를 상수화 시키려면 int * GetPtr
+        const int * GetPtr() const {
+          return &cnt;
         }
   
-  		/*  상수화된 함수에서 상수화되지 않은 함수를 호출하므로, 컴파일 에러
+        void Increment(){
+          cnt++;
+        }
+  
+        /*  상수화된 함수에서 상수화되지 않은 함수를 호출하므로, 컴파일 에러
         void ShowData() const {
             ShowIntro();
             cout << cnt << endl;
@@ -155,9 +155,9 @@ class Count{
         }
         */
   
-  		void ShowData() const {
-            ShowIntro();
-            cout << cnt << endl;
+        void ShowData() const {
+          ShowIntro();
+          cout << cnt << endl;
         }
         void ShowIntro() const {
             cout << "count 값: " << endl;
