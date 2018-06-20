@@ -140,6 +140,8 @@ int main(void)
 
 
 
+
+
 ### 함수 오버로딩
 
   . Function Overloading
@@ -234,6 +236,8 @@ int main()
 
 
 
+
+
 ### 인 라인 함수
 
   . `프로그램 라인 안으로 들어간 함수` , 함수 호출 문장이 함수의 몸체 부분으로 완전히 대체되는 현상 (in-line)
@@ -263,6 +267,8 @@ int main(void)
 ```
 
 ![4](https://user-images.githubusercontent.com/29933947/36084449-acf584ca-1000-11e8-82b5-27ad95175767.png)
+
+
 
 
 
@@ -318,6 +324,8 @@ namespace B_COM
 
 
 
+
+
 #### Using 선언
 
   . 반복적으로 사용할 네임 스페이스를 default로 선언하여 사용하기 위함
@@ -370,6 +378,8 @@ int main(void){
 
 
 
+
+
 ### bool 자료형
 
   . ture, false의 상태를 나타내기 위한 자료형
@@ -409,6 +419,8 @@ int main(void)
 ```
 
 ![7](https://user-images.githubusercontent.com/29933947/36085808-de40336c-100b-11e8-8389-076438f1dd3a.png)
+
+
 
 
 
@@ -542,6 +554,8 @@ int main(void){
 
 
 
+
+
 #### 함수 리턴 값으로 사용되는 레퍼런스
 
   . 함수의 지역변수를 리턴 값으로 전달하는 오류를 주의할 것
@@ -579,6 +593,8 @@ int main(void){
 ```
 
 ![11](https://user-images.githubusercontent.com/29933947/36089470-6d09151a-101f-11e8-80c5-85fabad5ef5d.png)
+
+
 
 
 
@@ -647,7 +663,7 @@ int main(void){
         arr[i] = i + 10;
     
     for(int j = 0; j < size; j++)
-        cout << " arr [ " << j << " ] = " << 0arr[j] << endl;
+        cout << " arr [ " << j << " ] = " << arr[j] << endl;
 
     delete []arr; // 메모리 반환
 
