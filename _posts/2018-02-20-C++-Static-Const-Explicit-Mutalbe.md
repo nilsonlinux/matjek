@@ -136,7 +136,7 @@ class Count{
   
         // 리턴 포인터(포인터가 가리키는 값)를 상수화
         // 따라서, 상수화된 함수 내에서 포인터 값을 리턴할 수 있음
-        // ※ 포인터를 상수화 시키려면 int * GetPtr
+        // ※ 포인터를 상수화 시키려면 const int * GetPtr [확인 필요]
         const int * GetPtr() const {
           return &cnt;
         }
