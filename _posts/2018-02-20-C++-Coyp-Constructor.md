@@ -34,8 +34,8 @@ class First{
 
 int main(void)
 {
-    int a = 10;     // 명시적 초기화
-    int b(20);      // 묵시적 초기화
+    int a = 10;     // 명시적 초기화  // C 형태의 초기화 
+    int b(20);      // 묵시적 초기화	// C++ 형태의 초기화
 
     First f1(10);   // 묵시적 초기화
     f1.ShowData();
@@ -168,6 +168,10 @@ int main(void)
 ![_ 3](https://user-images.githubusercontent.com/29933947/36523986-94d476dc-17e7-11e8-8151-9f23bc51bcd9.png)
 
 
+
+> 아래 예제에서는 char *name, char *phone의 멤버변수는 포인터 형태로 주소값을 가지고 있기 때문에, 
+>
+> 디폴트 복사 생성자에 의한 멤버변수 대 멤버변수 복사를 수행하면 주소값만 복사되어 두 개의 객체가 하나의 값을 가리키는 형상이 됨(위 그림)
 
 ```c++
 #include <iostream>
