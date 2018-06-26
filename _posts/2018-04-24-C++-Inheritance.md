@@ -860,8 +860,6 @@ int main(void)
 
 
 
-
-
 #### 멤버 함수의 가상 (Virtual) 선언
 
 > `virtual` 키워드를 함수 앞에 선언
