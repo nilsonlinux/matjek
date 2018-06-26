@@ -112,15 +112,23 @@ int main(void)
 
      : 상속하고 있는 클래스의 특정 생성자 호출 시, `멤버 이니셜라이저` 활용
 
-   ```c++
-   BBB(int j) : AAA(j) {
-      cout << " BBB(int j) call!" << endl; 
-   }
-   ```
-
    ​
 
 3. Base 클래스 생성자 실행
+
+   ```c++
+   // 상속하고 있는 AAA 클래스의 어떠한 생성자를 호출해야 한다는 선언이 존재하지 않음
+   // 따라서, AAA 클래스(Base 클래스의) void 생성자가 호출 및 실행 됨
+   BBB(int j){			
+      cout << " BBB(int j) call!" << endl;
+   }
+   ```
+
+   ```c++
+   BBB(int j) : AAA(j) {				// j 인자를 받을 수 있는 AAA 클래스의 생성자를 호출!
+      cout << " BBB(int j) call!" << endl; 
+   }
+   ```
 
    ![_ 4](https://user-images.githubusercontent.com/29933947/39177529-8456177e-47ea-11e8-8409-ef4420012c38.png)
 
@@ -162,10 +170,10 @@ class BBB : public AAA{
 int main(void)
 {
     cout << "객체 1 생성" << endl;
-    BBB bbb1;
+    BBB bbb1;		// BBB 생성자 호출 -> AAA 생성자(void) 호출/실행 -> BBB 생성자 실행
 
     cout << "객체 2 생성" << endl;
-    BBB bbb2(10);
+    BBB bbb2(10);	// BBB 생성자 호출 -> AAA 생성자(int) 호출/실행 -> BBB 생성자 실행
 
     return 0;
 }
@@ -179,7 +187,7 @@ int main(void)
 
 ```c++
 #include <iostream>
-#include <cstring>
+#i nclude <cstring>
 using std::endl;
 using std::cout;
 
