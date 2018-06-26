@@ -254,6 +254,17 @@ int main(void)
         }
 ```
 
+  . 멤버변수 접근은 부모 클래스의 함수를 통해 수행하도록 함
+
+```c++
+        int GetAge() const {
+            return age;
+        }
+        const char* GetName() const {
+            return name;
+        }
+```
+
  
 
   . 소멸 과정
