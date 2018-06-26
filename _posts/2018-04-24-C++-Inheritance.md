@@ -686,6 +686,19 @@ int main(void){
 
 
 
+##### 결론
+
+```c++
+1. PartTimeStd p;
+   - PartTimeStd가 상속받은 모든 클래스에 접근 가능(단, public, protected)
+2. PartTimeStd * p;
+   - PartTimeStd Class에만 접근가능
+3. PartTimeStd & p;
+   - PartTimeStd Class에만 접근가능
+```
+
+
+
 ### 정적, 동적 바인딩 (Static / Dynamic Binding)
 
 > 정적 바인딩은 컴파일 시, 호출될 함수가 정해지도록 하는 방법
@@ -742,6 +755,10 @@ int main(void)
 
 
 
+
+
+
+
 #### 오버라이딩 된 함수 호출
 
 ##### 포인터 활용
@@ -773,9 +790,11 @@ int main(void)
     Dervied* d = new Dervied;
     d->func();
 
-    Base* b = d;
+    Base* b = d;	// Base 객체 포인터로, Derived 객체 포인터 d 의 값을 받음
     b->func();
-
+  	
+  	// 즉, 선언된 객체 포인터 타입에 따라 접근할 수 있는 함수가 정해짐
+  
     delete b;
     
     return 0;
@@ -836,6 +855,10 @@ int main(void)
     return 0;
 }
 ```
+
+
+
+
 
 
 
