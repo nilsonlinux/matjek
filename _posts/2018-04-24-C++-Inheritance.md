@@ -985,7 +985,7 @@ class Base{
     char* str1;
     public:
         Base(char* _str1){
-            str1 = new char[strlen(_str1)];
+            str1 = new char[strlen(_str1)+1];
             strcpy(str1, _str1);
         }
   		~Base(){		// 소멸 시, 메모리 유출(누수) 발생 가능성 존재
