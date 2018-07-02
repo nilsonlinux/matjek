@@ -876,6 +876,8 @@ int main(void)
 > `virtual` 키워드를 함수 앞에 선언
 >
 > 해당 함수는 dynamic binding
+>
+> 만들어진 객체의 접근 형태에 따라, 사용할 함수를 선택하여 접근할 수 있다
 
 ```c++
 #include <iostream>
@@ -907,13 +909,17 @@ int main(void)
     Base* b = d;
     b->func();
 
+    Base * k = new Base;
+    k->func();
+
     delete b;
+    delete k;    
     
     return 0;
 }
 ```
 
-![5](https://user-images.githubusercontent.com/29933947/39230299-f74c7e60-48a0-11e8-9615-383465a7a6ac.png)
+![2](https://user-images.githubusercontent.com/29933947/42140965-641ac7ee-7de0-11e8-9619-f2b9d731a83d.png)
 
 
 
