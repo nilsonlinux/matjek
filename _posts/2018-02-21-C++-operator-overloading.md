@@ -504,6 +504,12 @@ int main(void)
 
 
 
+![_aaaaaaa](https://user-images.githubusercontent.com/29933947/42149968-323d0c40-7e13-11e8-997e-4bc2cc884f3f.png)
+
+
+
+
+
 #### 임시객체 생성의 의미
 
   . 위 예제의 `temp(x+val, y+val)` 의 형태를 `return Point(x+val, y+val)` 로 변경 가능함
