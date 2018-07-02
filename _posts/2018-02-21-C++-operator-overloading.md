@@ -791,6 +791,8 @@ int main(void){
 }
 ```
 
+![9](https://user-images.githubusercontent.com/29933947/42153382-ebf94dba-7e1d-11e8-84de-d5d896413abc.png)
+
 
 
   . 위의 예제를 배열의 인덱스 연산자( [ , ] ) 로  접근할 수 있도록 수정함
