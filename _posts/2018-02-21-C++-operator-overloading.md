@@ -129,7 +129,7 @@ int main(void)
 
 #### `Point Point::operator+(const Point& p) const ` 이해
 
-  . Point 객체를 인자로 전달 받음(맨 앞 Point)
+  . Point 객체를 인자로 전달 받음(Point p)
 
   . 함수 성능 향상을 위해 레퍼런스로 전달받음(Point &)
 
