@@ -339,8 +339,8 @@ Point Point::operator++(int)   // Postfix 연산자
 int main(void)
 {
     Point p1(10, 20);
-    (p1++).ShowData();    //  1, 2 출력
-    p1.ShowData();        //  2, 3 출력
+    (p1++).ShowData();    //  10, 20 출력
+    p1.ShowData();        //  11, 21 출력
 
     Point p2(10, 20);
     (++p2).ShowData();    //  11, 21 출력
