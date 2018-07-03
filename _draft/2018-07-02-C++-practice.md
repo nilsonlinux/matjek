@@ -2,7 +2,7 @@
 layout: post
 title: "C++ 프로그래밍 연습문제 답안 비교"
 date: 2018-07-02 12:00
-categorise: Program_Language
+categories: Program_Language
 tags: C++
 ---
 
