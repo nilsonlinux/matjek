@@ -10,9 +10,26 @@ C++ Template에 대해 정리한다.
 
 -------
 
-ㆍ
+ㆍ기능적 측면은 정해져 있으나, 데이터 타입은 정해져 있지 않을 경우 또는 다양한 데이터 타입을 하나의 기능으로 처리하도록 하기 위해 사용함
 
 
+
+#### 형태
+
+```c++
+template <typename T>
+// == template <class T>
+```
+
+> T라는 이름(typename)에 대해, 다음에 정의하는 대상을 템플릿으로 선언한다
+
+
+
+#### 함수템플릿
+
+ㆍ다중 인자(둘 이상의 타입) 템플릿
+
+ㆍ함수템플릿 특수화
 
 ```c++
 #include <iostream>
@@ -70,7 +87,7 @@ int main(void){
 
 
 
-
+#### 클래스템플릿
 
 ```c++
 #include <iostream>
@@ -88,7 +105,7 @@ class Data{
 };
 
 template <typename T>
-Data<T>::Data(T d){
+Data<T>::Data(T d){				// Data<T> 형태로 선언해 주어야함
     data=d;
 }
 
@@ -117,15 +134,44 @@ int main(void){
 
 ![5](https://user-images.githubusercontent.com/29933947/42253635-876a07b6-7f7d-11e8-823e-ae4150a8ae7a.png)
 
+#### 
+
+```c++
+// 객체 생성
+// ClassName<typename> Object<type>
+Data<int> d1(0);
+Data<char> d2('C');
+```
+
+> 클래스 템플릿을 기반으로 객체 생성 시,결정하고자 하는 자료형을 명시적으로 선언
+
+ㆍ객체 생성 순서는 메모리 할당 → 생성자 호출
+
+ㆍ생성자 호출 시, 전달 인자를 통해 자료형을 결정하고자 할 경우, 메모리 할당에 문제가 생김
+
+ㆍ따라서, 메모리 공간 할당을 위한 명시적 선언 필요
+
+ㆍ다른 이유는(근본적), 클래스 템플릿은 생성자를 통해서 전달되는 인자의 자료형과 결정되어야 할 템플릿의 자료형이 다를 수 있음
 
 
 
+```c++
+// ClassName<typename>::FunctionName(type...)
+Data<T>::SetData(); // a
+Data::SetData();	// b
+```
+
+> 클래스 템플릿의 선언과 정의를 구분할 경우, 'a' 형식을 사용
+
+ㆍa : T 타입에 대해서 템플릿으로 정의되어 있는 Data 클래스 템플릿의 멤버함수 정의
+
+ㆍb : Data 클래스의 멤버함수 정의
 
 
 
+##### Stack 템플릿화
 
-
-
+> 다양한 데이터를 저장하기 위한 Stack 객체를 생성 가능하게 함
 
 ```c++
 /*
