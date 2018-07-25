@@ -13,6 +13,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{site.baseurl}}/assets/res/favicon.ico">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"> 
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/main.css">
     {% for css in layout.css %}
     {% if css contains "//" %}
@@ -51,19 +52,19 @@
         <li>
           <div class="userView">
             <div class="background"></div>
-            <a href="{{site.github_profile}}" target="_blank"><img class="circle z-depth-2" src="{{site.baseurl}}/assets/res/user.png"></a>
-            <span class="white-text name">{{site.user}}</span>
-            <span class="white-text email">{{site.user_email}}</span>
+            <center><a href="{{site.github_profile}}" target="_blank"><img class="circle z-depth-2" src="{{site.baseurl}}/assets/res/user.png"></a></center>
+            <center><span class="white-text name">{{site.user}}</span></center>
+            <center><span class="white-text email">{{site.user_email}}</span></center>
           </div>
         </li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/"><i class="material-icons">home</i>Home</a></li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/projects"><i class="material-icons">description</i>Projects</a></li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/categories"><i class="material-icons">sort</i>Categories</a></li>
+        <li><a class="waves-effect" href="{{site.baseurl}}/"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a class="waves-effect" href="{{site.baseurl}}/projects"><i class="material-icons">code</i>Projetos</a></li>
+        <li><a class="waves-effect" href="{{site.baseurl}}/categories"><i class="material-icons">local_library</i>Categorias</a></li>
         <li><a class="waves-effect" href="{{site.baseurl}}/tags"><i class="material-icons">label</i>Tags</a></li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/feed.xml" target="_blank"><i class="material-icons">rss_feed</i>RSS</a></li>
+        <li><a class="waves-effect" href="{{site.baseurl}}/search"><i class="material-icons">search</i>Pesquisar no site</a></li>
         <li><div class="divider"></div></li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/about"><i class="material-icons">person</i>About</a></li>
-        <li><a class="waves-effect" href="{{site.baseurl}}/contact"><i class="material-icons">email</i>Contact</a></li>
-      </ul>
+        <li><a class="waves-effect" href="{{site.baseurl}}/about"><i class="material-icons">person_pin</i>Sobre</a></li>
+        <li><a class="waves-effect" href="{{site.baseurl}}/contact"><i class="material-icons">insert_comment</i>Enviar E-mail</a></li>
+       </ul>
     </header>
     <main>
